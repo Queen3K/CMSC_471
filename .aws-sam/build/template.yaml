@@ -9,18 +9,6 @@ Resources:
         - ${ResourceName} From Stack ${AWS::StackName}
         - ResourceName: Api
       StageName: Prod
-      DefinitionBody:
-        openapi: '3.0'
-        info: {}
-        paths:
-          /:
-            get:
-              x-amazon-apigateway-integration:
-                httpMethod: POST
-                type: aws_proxy
-                uri:
-                  Fn::Sub: arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorldFunction.Arn}/invocations
-              responses: {}
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
   HelloWorldFunction:
@@ -37,6 +25,72 @@ Resources:
       MemorySize: 3008
       Timeout: 30
       Tracing: Active
+      Environment: {}
+    Metadata:
+      SamResourceId: HelloWorldFunction
+  HelloWorldFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      LogGroupName:
+        Fn::Sub: /aws/lambda/${HelloWorldFunction}
+      RetentionInDays: 7
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: aws:kms
+            KMSMasterKeyID: alias/aws/s3
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+  BucketBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: Bucket
+      PolicyDocument:
+        Id: RequireEncryptionInTransit
+        Version: '2012-10-17'
+        Statement:
+        - Principal: '*'
+          Action: '*'
+          Effect: Deny
+          Resource:
+          - Fn::GetAtt:
+            - Bucket
+            - Arn
+          - Fn::Sub: ${Bucket.Arn}/*
+          Condition:
+            Bool:
+              aws:SecureTransport: 'false'
+  StaticProxyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description:
+        Fn::Sub:
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: StaticProxyFunction
+      CodeUri: StaticProxyFunction
+      Handler: proxy.proxy_handler
+      Runtime: python3.13
+      Role: arn:aws:iam::738157269385:role/LabRole
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          BUCKET_BUCKET_NAME:
+            Ref: Bucket
+          BUCKET_BUCKET_ARN:
+            Fn::GetAtt:
+            - Bucket
+            - Arn
       Events:
         ApiGET:
           Type: Api
@@ -45,17 +99,21 @@ Resources:
             Method: GET
             RestApiId:
               Ref: Api
-      Environment: {}
     Metadata:
-      SamResourceId: HelloWorldFunction
-  HelloWorldFunctionLogGroup:
+      SamResourceId: StaticProxyFunction
+  StaticProxyFunctionLogGroup:
     Type: AWS::Logs::LogGroup
     DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
     Properties:
       LogGroupName:
-        Fn::Sub: /aws/lambda/${HelloWorldFunction}
+        Fn::Sub: /aws/lambda/${StaticProxyFunction}
+      RetentionInDays: 7
 Outputs:
   HelloWorldApi:
     Description: API Gateway endpoint URL for Prod
     Value:
       Fn::Sub: https://${Api}.execute-api.${AWS::Region}.amazonaws.com/Prod/
+  FrontendBucketName:
+    Value:
+      Ref: Bucket

@@ -9,4 +9,13 @@ manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
 packagetype = "Zip"
 functions = ["HelloWorldFunction"]
 
+[function_build_definitions.77fd8c2b-c762-47f2-a4be-37538cbc5319]
+codeuri = "c:\\Users\\QueenM\\Downloads\\CMSC_471\\hello_service\\src\\proxy"
+runtime = "python3.13"
+architecture = "x86_64"
+handler = "proxy.proxy_handler"
+manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
+packagetype = "Zip"
+functions = ["StaticProxyFunction"]
+
 [layer_build_definitions]
