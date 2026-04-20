@@ -1,35 +1,32 @@
 ```mermaid
 graph TD
-    %% Edge & Network
-    User[User] --> R53[Route 53 DNS]
-    R53 --> AGW[API Gateway]
-    AGW --> ALB[Application Load Balancer]
+    User[User browser] --> APIG[API Gateway<br/>Public entry point]
 
-    %% Compute (Tier 2)
-    subgraph VPC [VPC - Public & Private Subnets]
-        ALB --> ASG[EC2 Auto Scaling Group / Docker]
-    end
+    APIG -->|GET /| LIndex[Lambda<br/>Fetch and return index.htm]
+    APIG -->|GET POST DELETE /api/inbox| LInbox[Lambda<br/>Manage S3 inbox files]
+    APIG -->|POST /api/jobs| LStart[Lambda<br/>startExecution]
+    APIG -->|GET /api/jobs/jobId| LPoll[Lambda<br/>Poll job status]
+    APIG -->|GET DELETE /api/records| LRecords[Lambda<br/>Fetch and delete results]
 
-    %% Orchestration & Serverless (Tier 3)
-    ASG --> SF[Step Functions State Machine]
+    LIndex -.-> S3Web[S3 Bucket<br/>index.html, JS, CSS]
+    LInbox -.-> S3Store[S3 Bucket<br/>Inbox images]
+    LStart -->|startExecution| SF
+
+    LPoll -.-> DDB[DynamoDB<br/>Job state and metadata]
+    LRecords -.-> Aurora[Aurora RDS<br/>Results]
+
     subgraph Serverless [Serverless Domain]
-        SF --> L1[Lambda: Fetch Image S3]
-        SF --> L2[Lambda: Invoke Textract]
-        SF --> L3[Lambda: Save Results]
-        L2 -.-> Textract[Amazon Textract]
+        SF[Step Functions State Machine]
+
+        SF --> L1[Lambda<br/>Fetch image from S3]
+        SF --> L2[Lambda<br/>Call Textract]
+        SF --> L3[Lambda<br/>Save Results]
+
+        L2 -.-> Text[Amazon Textract<br/>Replaces Bedrock]
     end
+    L1 -.-> S3Store
+    L3 -.-> Aurora
+    L3 -.-> DDB
 
-    %% Persistence (Tier 4)
-    L1 -.-> S3Store[S3 Bucket: Images]
-    S3Store -.-> Glacier[S3 Glacier: Archival Compliance]
-    L3 -.-> Aurora[Aurora RDS: Relational Data]
-    L3 -.-> DDB[DynamoDB: Job State/Metadata]
-    
-    %% Analytics & Storage concepts
-    Aurora -.-> Redshift[(Redshift: Analytics Mention)]
-    ASG -.-> EFS[EFS: Shared EC2 Storage]
-
-    %% Monitoring
-    CW[CloudWatch / Trusted Advisor] -.-> VPC
-    CW -.-> Serverless
+    CW[CloudWatch] -.-> Serverless
 ```
