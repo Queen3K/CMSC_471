@@ -28,5 +28,5 @@ graph TD
     L3 -.-> Aurora
     L3 -.-> DDB
 
-    CW[CloudWatch] -.-> Serverless
+    CW[CloudWatch] -.-> SF
 ```
