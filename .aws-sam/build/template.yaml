@@ -1,5 +1,10 @@
 Transform: AWS::Serverless-2016-10-31
 Description: CMSC 471 Hello World SAM app
+Parameters:
+  LabRoleArn:
+    Type: String
+    Description: The ARN of the Labrole AWS Learner Lab
+    Default: arn:aws:iam::738157269385:role/LabRole
 Resources:
   Api:
     Type: AWS::Serverless::Api
@@ -21,7 +26,8 @@ Resources:
       CodeUri: HelloWorldFunction
       Handler: handler.handler
       Runtime: python3.13
-      Role: arn:aws:iam::738157269385:role/LabRole
+      Role:
+        Ref: LabRoleArn
       MemorySize: 3008
       Timeout: 30
       Tracing: Active
@@ -79,7 +85,8 @@ Resources:
       CodeUri: StaticProxyFunction
       Handler: proxy.proxy_handler
       Runtime: python3.13
-      Role: arn:aws:iam::738157269385:role/LabRole
+      Role:
+        Ref: LabRoleArn
       MemorySize: 3008
       Timeout: 30
       Tracing: Active
