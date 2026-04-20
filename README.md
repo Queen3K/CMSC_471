@@ -1,3 +1,4 @@
+```mermaid
 graph TD
     User[User browser] --> APIG[API Gateway<br/>Public entry point]
 
@@ -28,3 +29,4 @@ graph TD
     L3 -.-> DDB
 
     CW[CloudWatch] -.-> Serverless
+```
