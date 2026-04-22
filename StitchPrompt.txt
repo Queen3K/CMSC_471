@@ -1,0 +1,12 @@
+web application/stitch/projects/12723634026623610422/screens/8c144ebd952a421fbbb489d7a04f4b93
+Design a high-fidelity single-page application dashboard using the 'Ethereal Minimalism' design system. The page should feature a clean, white-and-slate color palette with soft shadows and a light-filled, airy feel.
+
+Key components to include:
+1. **Side Navigation Bar**: A fixed sidebar with a workspace logo, navigation tabs for 'Inbox', 'Process', and 'Records', and a storage usage indicator.
+2. **Top App Bar**: A clean header with a search bar, notification icons, and a user profile avatar.
+3. **Inbox Section**: A list of recent messages with sender names, subject lines, timestamps, and a 'View All' link.
+4. **Process Section**: A tracking area for active projects using progress bars, status badges (e.g., 'In Review', 'Processing', 'Complete'), and a 'Launch New Process' call-to-action button.
+5. **System Health Card**: A visual card with an architectural/tech-themed image showing overall system status.
+6. **Recent Records Table**: A detailed data table with columns for Record ID, Name/Description, Category, Timestamp, and Verification Status, including filtering and export options.
+
+The overall layout should be responsive and well-spaced, emphasizing a focused and calm user experience.

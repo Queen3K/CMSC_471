@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#555c69",
+                    "on-surface": "#2b3437",
+                    "primary-container": "#dce2f7",
+                    "on-secondary": "#f8f8ff",
+                    "secondary-container": "#dce2f3",
+                    "surface-dim": "#d1dce0",
+                    "tertiary-container": "#ddddfe",
+                    "on-primary-container": "#4b5263",
+                    "surface-container-highest": "#dbe4e7",
+                    "on-tertiary-fixed": "#3a3b55",
+                    "on-tertiary-container": "#4d4e68",
+                    "on-error": "#fff7f6",
+                    "surface-bright": "#f8f9fa",
+                    "surface-container-low": "#f1f4f6",
+                    "on-background": "#2b3437",
+                    "primary-fixed": "#dce2f7",
+                    "error-dim": "#4e0309",
+                    "tertiary-fixed": "#ddddfe",
+                    "secondary-fixed": "#dce2f3",
+                    "outline-variant": "#abb3b7",
+                    "inverse-on-surface": "#9b9d9e",
+                    "tertiary-fixed-dim": "#cfcfef",
+                    "error-container": "#fe8983",
+                    "on-primary": "#f7f7ff",
+                    "surface-tint": "#575e70",
+                    "on-surface-variant": "#586064",
+                    "secondary-fixed-dim": "#ced4e4",
+                    "primary": "#575e70",
+                    "error": "#9f403d",
+                    "background": "#f8f9fa",
+                    "on-primary-fixed-variant": "#545b6d",
+                    "on-primary-fixed": "#383f50",
+                    "primary-dim": "#4b5264",
+                    "secondary": "#585f6d",
+                    "inverse-surface": "#0c0f10",
+                    "surface-container-high": "#e2e9ec",
+                    "on-error-container": "#752121",
+                    "outline": "#737c7f",
+                    "secondary-dim": "#4c5361",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#ced4e9",
+                    "on-secondary-container": "#4b525f",
+                    "tertiary": "#5c5d78",
+                    "surface": "#f8f9fa",
+                    "inverse-primary": "#d9dff5",
+                    "on-tertiary-fixed-variant": "#565873",
+                    "surface-container": "#eaeff1",
+                    "surface-variant": "#dbe4e7",
+                    "on-secondary-fixed": "#39404c",
+                    "tertiary-dim": "#50516c",
+                    "on-tertiary": "#fbf8ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<nav class="fixed top-0 w-full z-50 bg-slate-50/70 dark:bg-slate-950/70 backdrop-blur-xl shadow-[0_20_40px_rgba(43,52,55,0.06)]">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-8 h-20">
+<div class="text-xl font-bold text-slate-800 dark:text-slate-100 tracking-tighter font-manrope">
+                Gallery
+            </div>
+<div class="hidden md:flex items-center gap-8 font-manrope tracking-tight">
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-slate-900 dark:hover:text-slate-100 transition-colors duration-300" href="#">Experience</a>
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-slate-900 dark:hover:text-slate-100 transition-colors duration-300" href="#">Curation</a>
+<a class="text-slate-500 dark:text-slate-400 font-medium hover:text-slate-900 dark:hover:text-slate-100 transition-colors duration-300" href="#">Inquiry</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 bg-gradient-to-br from-primary to-primary-dim text-on-primary rounded-full font-medium scale-95 active:scale-90 transition-all duration-300 shadow-sm">
+                    Connect
+                </button>
+<button class="md:hidden text-slate-700">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="flex-grow flex items-center justify-center px-6 pt-20 pb-12 relative overflow-hidden">
+<div class="absolute inset-0 z-0 pointer-events-none">
+<div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/5 rounded-full blur-[100px]"></div>
+<div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-secondary/5 rounded-full blur-[100px]"></div>
+</div>
+<div class="relative z-10 w-full max-w-2xl">
+<div class="absolute -top-6 -left-6 bg-surface-container-high w-12 h-12 rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary" data-icon="sparkles">colors_spark</span>
+</div>
+<div class="bg-surface-container-lowest rounded-full p-16 md:p-24 shadow-[0_20px_40px_rgba(43,52,55,0.06)] flex flex-col items-center text-center">
+<span class="text-[0.7rem] uppercase tracking-[0.3em] font-bold text-primary/60 mb-6 font-label">
+                    Established 2024
+                </span>
+<h1 class="text-5xl md:text-7xl font-extrabold text-on-surface tracking-tighter mb-8 leading-tight">
+                    Hello World
+                </h1>
+<p class="text-lg md:text-xl text-on-surface-variant font-normal max-w-md leading-relaxed mb-10">
+                    Welcome to a space where digital precision meets artistic soul. We're glad you've arrived at our minimalist sanctuary.
+                </p>
+<div class="w-12 h-[1px] bg-outline-variant/30 mb-10"></div>
+<div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+<button class="px-8 py-3.5 bg-gradient-to-br from-primary to-primary-dim text-on-primary rounded-full font-semibold shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all duration-300 active:scale-95">
+                        Begin Journey
+                    </button>
+<button class="px-8 py-3.5 bg-surface-container-high text-on-surface rounded-full font-semibold hover:bg-surface-container-highest transition-all duration-300 active:scale-95">
+                        Learn More
+                    </button>
+</div>
+</div>
+<div class="absolute -bottom-8 -right-4 bg-surface-container-lowest py-3 px-6 rounded-full shadow-md flex items-center gap-3">
+<div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+<span class="text-xs font-medium text-on-surface-variant font-label tracking-wide">Live in the Cloud</span>
+</div>
+</div>
+</main>
+<footer class="w-full py-12 mt-auto bg-slate-100 dark:bg-slate-900 tonal-transition-from-surface">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto px-8 gap-6">
+<div class="text-slate-600 dark:text-slate-400 font-inter text-xs uppercase tracking-widest">
+                © 2024 Ethereal Gallery. All rights reserved.
+            </div>
+<div class="flex items-center gap-8">
+<a class="text-slate-500 dark:text-slate-500 font-inter text-xs uppercase tracking-widest opacity-80 hover:opacity-100 hover:text-slate-800 dark:hover:text-slate-200 underline decoration-slate-300 transition-all duration-300" href="#">Privacy</a>
+<a class="text-slate-500 dark:text-slate-500 font-inter text-xs uppercase tracking-widest opacity-80 hover:opacity-100 hover:text-slate-800 dark:hover:text-slate-200 underline decoration-slate-300 transition-all duration-300" href="#">Terms</a>
+<a class="text-slate-500 dark:text-slate-500 font-inter text-xs uppercase tracking-widest opacity-80 hover:opacity-100 hover:text-slate-800 dark:hover:text-slate-200 underline decoration-slate-300 transition-all duration-300" href="#">Studio</a>
+</div>
+</div>
+</footer>
+</body></html>
