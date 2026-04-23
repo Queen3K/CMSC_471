@@ -4,7 +4,7 @@ Description: CMSC 471 Hello World SAM app
 Parameters:
   LabRoleArn:
     Type: String
-    Description: The ARN of the Labrole AWS Learner Lab
+    Description: The ARN of the LabRole AWS Learner Lab
     Default: arn:aws:iam::738157269385:role/LabRole
 
 Resources:
@@ -17,6 +17,7 @@ Resources:
       StageName: Prod
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
+
   HealthFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -46,6 +47,7 @@ Resources:
     Properties:
       LogGroupName: !Sub /aws/lambda/${HealthFunction}
       RetentionInDays: 7
+
   Bucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -59,23 +61,26 @@ Resources:
         BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
+
   BucketBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
       Bucket: !Ref Bucket
       PolicyDocument:
         Id: RequireEncryptionInTransit
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
-          - Principal: '*'
-            Action: '*'
+          - Sid: DenyInsecureTransport
+            Principal: "*"
+            Action: "s3:*"
             Effect: Deny
             Resource:
               - !GetAtt Bucket.Arn
-              - !Sub ${Bucket.Arn}/*
+              - !Sub "${Bucket.Arn}/*"
             Condition:
               Bool:
-                aws:SecureTransport: 'false'
+                aws:SecureTransport: "false"
+
   StaticProxyFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -100,6 +105,7 @@ Resources:
             Path: /
             Method: GET
             RestApiId: !Ref Api
+
   StaticProxyFunctionLogGroup:
     Type: AWS::Logs::LogGroup
     DeletionPolicy: Delete
@@ -107,34 +113,54 @@ Resources:
     Properties:
       LogGroupName: !Sub /aws/lambda/${StaticProxyFunction}
       RetentionInDays: 7
+
   InboxBucket:
     Type: AWS::S3::Bucket
     Properties:
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - DELETE
+            AllowedOrigins:
+              - '*'
+            ExposedHeaders:
+              - ETag
+            MaxAge: 300
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: aws:kms
               KMSMasterKeyID: alias/aws/s3
       PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
+
   InboxBucketBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
       Bucket: !Ref InboxBucket
       PolicyDocument:
         Id: RequireEncryptionInTransit
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
-          - Principal: '*'
-            Action: '*'
+          - Sid: DenyInsecureTransport
+            Principal: "*"
+            Action: "s3:*"
             Effect: Deny
             Resource:
               - !GetAtt InboxBucket.Arn
-              - !Sub ${InboxBucket.Arn}/*
+              - !Sub "${InboxBucket.Arn}/*"
             Condition:
               Bool:
-                aws:SecureTransport: 'false'
+                aws:SecureTransport: "false"
+
   LInbox:
     Type: AWS::Serverless::Function
     Properties:
@@ -182,16 +208,20 @@ Resources:
 Outputs:
   HelloWorldApi:
     Description: API Gateway endpoint URL for Prod
-    Value: !Sub https://${Api}.execute-api.${AWS::Region}.amazonaws.com/Prod/
+    Value: !Sub "https://${Api}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+
   FrontendBucketName:
+    Description: S3 bucket name holding our index.html
     Value: !Ref Bucket
+
   FrontendDeployCommand:
-    Description: Run this command to deploy index.html to s3 bucket
-    Value: !Sub aws s3 cp .\wwwroot\index.html s3://${Bucket}/index.html
+    Description: Run this command to deploy index.html to S3 bucket
+    Value: !Sub "aws s3 cp .\\wwwroot\\index.html s3://${Bucket}/index.html"
+
   FrontendTeardownCommand:
-    Description: Run this command to remove index.html from s3 bucket
-    Value: !Sub aws s3 rm s3://${Bucket}/index.html
+    Description: Run this command to remove index.html from S3 bucket
+    Value: !Sub "aws s3 rm s3://${Bucket}/index.html"
+
   RemoveStackCommand:
     Description: Run this command to remove this stack
-    Value: !Sub aws cloudformation delete-stack --stack-name ${AWS::StackName}
-      --region us-east-1
+    Value: !Sub "aws cloudformation delete-stack --stack-name ${AWS::StackName} --region us-east-1"

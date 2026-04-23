@@ -1,8 +1,14 @@
 import json
 import boto3
 import os
+from botocore.client import Config
 
-s3 = boto3.client("s3")
+s3 = boto3.client(
+    "s3",
+    region_name="us-east-1",
+    config=Config(signature_version="s3v4")
+)
+
 BUCKET = os.environ["INBOX_BUCKET_NAME"]
 
 

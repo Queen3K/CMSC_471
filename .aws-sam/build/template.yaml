@@ -3,7 +3,7 @@ Description: CMSC 471 Hello World SAM app
 Parameters:
   LabRoleArn:
     Type: String
-    Description: The ARN of the Labrole AWS Learner Lab
+    Description: The ARN of the LabRole AWS Learner Lab
     Default: arn:aws:iam::738157269385:role/LabRole
 Resources:
   Api:
@@ -72,8 +72,9 @@ Resources:
         Id: RequireEncryptionInTransit
         Version: '2012-10-17'
         Statement:
-        - Principal: '*'
-          Action: '*'
+        - Sid: DenyInsecureTransport
+          Principal: '*'
+          Action: s3:*
           Effect: Deny
           Resource:
           - Fn::GetAtt:
@@ -127,12 +128,28 @@ Resources:
   InboxBucket:
     Type: AWS::S3::Bucket
     Properties:
+      CorsConfiguration:
+        CorsRules:
+        - AllowedHeaders:
+          - '*'
+          AllowedMethods:
+          - GET
+          - PUT
+          - POST
+          - DELETE
+          AllowedOrigins:
+          - '*'
+          ExposedHeaders:
+          - ETag
+          MaxAge: 300
       BucketEncryption:
         ServerSideEncryptionConfiguration:
         - ServerSideEncryptionByDefault:
             SSEAlgorithm: aws:kms
             KMSMasterKeyID: alias/aws/s3
       PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
   InboxBucketBucketPolicy:
@@ -144,8 +161,9 @@ Resources:
         Id: RequireEncryptionInTransit
         Version: '2012-10-17'
         Statement:
-        - Principal: '*'
-          Action: '*'
+        - Sid: DenyInsecureTransport
+          Principal: '*'
+          Action: s3:*
           Effect: Deny
           Resource:
           - Fn::GetAtt:
@@ -212,14 +230,15 @@ Outputs:
     Value:
       Fn::Sub: https://${Api}.execute-api.${AWS::Region}.amazonaws.com/Prod/
   FrontendBucketName:
+    Description: S3 bucket name holding our index.html
     Value:
       Ref: Bucket
   FrontendDeployCommand:
-    Description: Run this command to deploy index.html to s3 bucket
+    Description: Run this command to deploy index.html to S3 bucket
     Value:
       Fn::Sub: aws s3 cp .\wwwroot\index.html s3://${Bucket}/index.html
   FrontendTeardownCommand:
-    Description: Run this command to remove index.html from s3 bucket
+    Description: Run this command to remove index.html from S3 bucket
     Value:
       Fn::Sub: aws s3 rm s3://${Bucket}/index.html
   RemoveStackCommand:
