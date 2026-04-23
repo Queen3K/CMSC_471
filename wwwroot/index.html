@@ -3,538 +3,942 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CMSC 471 AWS Dashboard</title>
+  <title>YELLOW SIGN DINER - Operations Dashboard</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&family=Be+Vietnam+Pro:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #161311;
-      --panel: #2d2d2d;
+      --bg: #000000;
+      --panel: #171311;
+      --panel-2: #201b18;
       --accent: #fbbf24;
+      --accent-soft: rgba(251, 191, 36, 0.18);
       --text: #fef3c7;
-      --muted: rgba(254, 243, 199, 0.75);
-      --border: rgba(251, 191, 36, 0.28);
-      --dark: #0a0a0a;
-      --danger: #ff7b7b;
+      --muted: rgba(254, 243, 199, 0.68);
+      --line: rgba(254, 243, 199, 0.12);
+      --danger: #f87171;
+      --danger-soft: rgba(248, 113, 113, 0.14);
+      --success: #86efac;
+      --shadow: 0 0 24px rgba(251, 191, 36, 0.16);
+      --header-h: 80px;
+      --footer-h: 36px;
     }
 
-    * {
-      box-sizing: border-box;
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Be Vietnam Pro', Arial, sans-serif;
     }
 
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
+      overflow: hidden;
       background-image:
         linear-gradient(rgba(254, 243, 199, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(254, 243, 199, 0.03) 1px, transparent 1px);
       background-size: 28px 28px;
     }
 
-    header {
-      background: var(--dark);
-      border-bottom: 2px solid var(--accent);
-      padding: 18px 28px;
+    button, input {
+      font: inherit;
+    }
+
+    .app-shell {
+      height: 100vh;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+    }
+
+    .topbar {
+      height: var(--header-h);
+      display: flex;
       align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      border-bottom: 2px solid rgba(254, 243, 199, 0.16);
+      background: #0a0a0a;
+      box-shadow: 0 4px 20px rgba(251, 191, 36, 0.12);
+      flex-shrink: 0;
     }
 
     .brand {
-      font-size: 24px;
-      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
       color: var(--accent);
-      text-shadow: 0 0 10px rgba(251, 191, 36, 0.45);
+      text-transform: uppercase;
+      font-style: italic;
+      text-shadow: 0 0 12px rgba(251, 191, 36, 0.45);
     }
 
     .nav {
       display: flex;
-      gap: 18px;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .nav-pill {
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 13px;
       font-weight: 700;
+      letter-spacing: 0.08em;
       color: var(--muted);
+      text-transform: uppercase;
     }
 
-    .nav span:first-child {
+    .nav-pill.active {
+      color: #111;
+      background: var(--accent);
+      padding: 8px 12px;
+      box-shadow: 4px 4px 0 0 #fef3c7;
+    }
+
+    .status-banner {
+      padding: 18px 28px 14px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(251, 191, 36, 0.07), rgba(251, 191, 36, 0.02));
+      flex-shrink: 0;
+    }
+
+    .status-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .status-main {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1.05;
       color: var(--accent);
+      text-shadow: 0 0 16px rgba(251, 191, 36, 0.42);
+      text-transform: uppercase;
     }
 
-    .hero {
-      max-width: 1280px;
-      margin: 26px auto 18px;
-      padding: 24px;
-      text-align: center;
-      background: var(--panel);
-      border: 2px solid var(--accent);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-    }
-
-    .hero h1 {
-      margin: 8px 0 6px;
-      font-size: 50px;
-      color: var(--accent);
-      text-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
-    }
-
-    .hero p {
-      margin: 0;
+    .status-sub {
+      margin-top: 8px;
       color: var(--muted);
       font-size: 13px;
+      letter-spacing: 0.04em;
     }
 
-    .layout {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px 28px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1.15fr;
-      gap: 20px;
-    }
-
-    .stack {
+    .main-grid {
+      flex: 1;
+      min-height: 0;
       display: flex;
-      flex-direction: column;
-      gap: 20px;
+      overflow: hidden;
     }
 
     .panel {
-      background: var(--panel);
-      border: 2px solid var(--border);
-      padding: 20px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-      min-height: 0;
-    }
-
-    .panel h2 {
-      margin: 0 0 16px;
-      font-size: 18px;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .scroll {
-      overflow: auto;
-      max-height: 360px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-
-    th {
-      text-align: left;
-      color: var(--accent);
-      padding: 0 0 10px;
-      border-bottom: 1px solid var(--border);
-      font-size: 11px;
-    }
-
-    td {
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      vertical-align: top;
-    }
-
-    .muted {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .bar-wrap {
+      flex: 1 1 33.333%;
+      min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      padding: 22px;
+      background: rgba(0, 0, 0, 0.35);
+      border-right: 2px solid var(--line);
     }
 
-    .bar-label {
+    .panel:last-child {
+      border-right: none;
+    }
+
+    .panel-title-row {
       display: flex;
+      align-items: flex-end;
       justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: 18px;
+      flex-shrink: 0;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 900;
+      font-style: italic;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.34);
+    }
+
+    .panel-meta {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
-      font-weight: 700;
-      margin-bottom: 4px;
+      color: var(--muted);
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
-    .bar {
-      height: 8px;
-      background: #111;
-      border: 1px solid rgba(255,255,255,0.08);
+    .panel-scroll {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding-right: 4px;
     }
 
-    .fill {
-      height: 100%;
+    .panel-scroll::-webkit-scrollbar,
+    #log-area::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    .panel-scroll::-webkit-scrollbar-track,
+    #log-area::-webkit-scrollbar-track {
+      background: #0d0d0d;
+    }
+
+    .panel-scroll::-webkit-scrollbar-thumb,
+    #log-area::-webkit-scrollbar-thumb {
       background: var(--accent);
-      box-shadow: 0 0 8px var(--accent);
     }
 
-    .primary-btn,
-    .outline-btn,
-    .danger-btn {
+    .section-button, .danger-button, .ghost-button {
+      border: none;
       cursor: pointer;
-      transition: 0.15s ease;
-      font-weight: 800;
+      transition: transform 0.12s ease, filter 0.12s ease, background 0.12s ease;
     }
 
-    .primary-btn:active,
-    .outline-btn:active,
-    .danger-btn:active {
+    .section-button:active,
+    .danger-button:active,
+    .ghost-button:active {
       transform: translateY(1px);
     }
 
-    .primary-btn {
+    .section-button {
       width: 100%;
-      margin-top: 18px;
-      padding: 12px;
-      border: none;
+      padding: 14px 16px;
       background: var(--accent);
-      color: #161311;
+      color: #111;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
       text-transform: uppercase;
+      letter-spacing: 0.04em;
+      box-shadow: var(--shadow);
     }
 
-    .outline-btn {
-      width: 100%;
-      padding: 11px;
-      border: 1px solid var(--accent);
+    .section-button:hover {
+      filter: brightness(1.04);
+    }
+
+    .ghost-button {
+      padding: 12px 14px;
+      border: 2px solid rgba(254, 243, 199, 0.24);
       background: transparent;
-      color: var(--accent);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
-    .danger-btn {
-      border: 1px solid var(--danger);
+    .ghost-button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .danger-button {
+      padding: 12px 14px;
+      border: 2px solid rgba(248, 113, 113, 0.35);
+      background: var(--danger-soft);
+      color: #fecaca;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .danger-button:hover {
+      background: rgba(248, 113, 113, 0.2);
+    }
+
+    .upload-wrap {
+      margin-top: 16px;
+      flex-shrink: 0;
+    }
+
+    .inbox-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 12px;
+      margin-bottom: 10px;
+      background: var(--panel);
+      border-left: 4px solid var(--accent);
+      border: 1px solid rgba(254, 243, 199, 0.08);
+      cursor: pointer;
+      transition: background 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .inbox-item:hover {
+      background: var(--panel-2);
+    }
+
+    .inbox-item.selected {
+      background: rgba(251, 191, 36, 0.14);
+      border-color: rgba(251, 191, 36, 0.5);
+      box-shadow: var(--shadow);
+    }
+
+    .file-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      word-break: break-word;
+    }
+
+    .delete-x {
+      border: none;
       background: transparent;
       color: var(--danger);
-      padding: 6px 10px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 4px 8px;
+      flex-shrink: 0;
+    }
+
+    .delete-x:hover {
+      background: rgba(248, 113, 113, 0.12);
+    }
+
+    .selection-card {
+      background: var(--panel);
+      border: 1px solid rgba(254, 243, 199, 0.12);
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2);
+    }
+
+    .selection-label {
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
     }
 
-    .status-badge {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 800;
-      padding: 2px 6px;
-      border: 1px solid var(--accent);
+    .selection-file {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--text);
+      min-height: 20px;
+      word-break: break-word;
+    }
+
+    .log-card {
+      margin-top: 16px;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      background: #040404;
+      border: 1px solid rgba(251, 191, 36, 0.18);
+    }
+
+    .log-toolbar {
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(251, 191, 36, 0.15);
+      background: rgba(251, 191, 36, 0.08);
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .log-toolbar span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
       color: var(--accent);
-      background: rgba(251, 191, 36, 0.1);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
-    .log-box {
-      background: #000;
+    .mini-btn {
+      border: none;
+      background: transparent;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .mini-btn:hover {
+      text-decoration: underline;
     }
 
     #log-area {
-      height: 220px;
+      flex: 1;
+      min-height: 0;
       overflow: auto;
-      font-family: Consolas, monospace;
-      font-size: 11px;
-      color: #9f9f9f;
+      padding: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      color: #d1fae5;
+      background: #020202;
       white-space: pre-wrap;
     }
 
-    .footer-note {
-      margin-top: 8px;
-      font-size: 10px;
-      color: rgba(254, 243, 199, 0.5);
-      text-align: center;
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+      flex-shrink: 0;
     }
 
-    footer {
-      padding: 18px 32px;
-      border-top: 1px solid rgba(251, 191, 36, 0.1);
-      display: flex;
-      justify-content: space-between;
+    .button-row .danger-button {
+      grid-column: 1 / -1;
+    }
+
+    table.record-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    .record-table th {
+      text-align: left;
+      color: var(--accent);
       font-size: 11px;
-      color: rgba(254, 243, 199, 0.55);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0 0 10px;
+      border-bottom: 1px solid rgba(251, 191, 36, 0.16);
+    }
+
+    .record-table td {
+      padding: 10px 8px 10px 0;
+      border-bottom: 1px solid rgba(254, 243, 199, 0.06);
+      word-break: break-word;
+    }
+
+    .record-row-even {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .status-chip {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid rgba(251, 191, 36, 0.28);
+      background: rgba(251, 191, 36, 0.1);
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .footer-ticker {
+      height: var(--footer-h);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--accent);
+      color: #111;
+      flex-shrink: 0;
+    }
+
+    .footer-label {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      background: #111;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      border-right: 1px solid #111;
+      white-space: nowrap;
+    }
+
+    .footer-text {
+      white-space: nowrap;
+      padding-left: 100%;
+      display: inline-block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      animation: scrollTicker 24s linear infinite;
+    }
+
+    @keyframes scrollTicker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .empty-state {
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 12px 2px;
     }
 
     @media (max-width: 1100px) {
-      .layout {
-        grid-template-columns: 1fr;
+      .main-grid {
+        flex-direction: column;
+      }
+
+      .panel {
+        border-right: none;
+        border-bottom: 2px solid var(--line);
+        min-height: 33%;
+      }
+
+      .panel:last-child {
+        border-bottom: none;
+      }
+
+      .status-main {
+        font-size: 34px;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="brand">CMSC 471 AWS DASHBOARD</div>
-    <div class="nav">
-      <span>DASHBOARD</span>
-      <span>RECORDS</span>
-      <span>NETWORK</span>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="muted">SYSTEM INTEGRATION STATUS</div>
-    <h1 id="system-status">LOADING</h1>
-    <p id="system-subtitle">Checking health endpoint...</p>
-  </section>
-
-  <main class="layout">
-    <!-- Left column -->
-    <section class="panel">
-      <h2>Inbox</h2>
-      <div class="scroll">
-        <table id="inbox-list">
-          <thead>
-            <tr>
-              <th>FILE NAME</th>
-              <th style="text-align:right;">ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="muted" colspan="2">Loading inbox...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Middle column -->
-    <section class="stack">
-      <div class="panel">
-        <h2>Active Processes</h2>
-
-        <div class="bar-wrap">
-          <div>
-            <div class="bar-label">
-              <span>Health Endpoint</span>
-              <span>Online</span>
-            </div>
-            <div class="bar"><div class="fill" style="width: 95%;"></div></div>
-          </div>
-
-          <div>
-            <div class="bar-label">
-              <span>Inbox Pipeline</span>
-              <span>Ready</span>
-            </div>
-            <div class="bar"><div class="fill" style="width: 80%;"></div></div>
-          </div>
-
-          <div>
-            <div class="bar-label">
-              <span>Static Website</span>
-              <span>Connected</span>
-            </div>
-            <div class="bar"><div class="fill" style="width: 88%;"></div></div>
-          </div>
-        </div>
-
-        <button id="process-btn" class="primary-btn">Update System Status</button>
-      </div>
-
-      <div class="panel">
-        <h2>S3 Asset Upload</h2>
-
-        <input type="file" id="file-input" hidden accept="image/png" />
-        <button id="upload-btn" class="outline-btn">Select &amp; Upload PNG</button>
-        <div class="footer-note">Uploads to the inbox bucket through the inbox API.</div>
-      </div>
-    </section>
-
-    <!-- Right column -->
-    <section class="stack">
-      <div class="panel">
-        <h2>Records</h2>
-        <div class="scroll">
-          <table id="records-table">
-            <thead>
-              <tr>
-                <th>TIME</th>
-                <th>EVENT</th>
-                <th>STATUS</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>--:--:--</td>
-                <td class="muted">Records endpoint not implemented yet</td>
-                <td><span class="status-badge">PENDING</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="panel log-box">
-        <h2>CloudWatch Feed</h2>
-        <div id="log-area">[SYSTEM] Dashboard loaded.</div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div>CMSC 471 Final Project</div>
-    <div>SAM + API Gateway + Lambda + S3</div>
-  </footer>
-
+  <div id="root"></div>
   <script>
     "use strict";
 
-    const API = "https://ao2zcudu47.execute-api.us-east-1.amazonaws.com/Prod";
+    const API = "https://";
 
     // id="inbox-list"
-    // id="process-btn"
-    // id="records-table"
-    // id="log-area"
     // id="upload-btn"
+    // id="process-btn"
+    // id="log-area"
+    // id="records-table"
 
-    async function loadHealth() {
-      try {
-        const res = await fetch(`${API}/api/health`);
-        const data = await res.json();
+    const { useState, useEffect } = React;
+    const h = React.createElement;
 
-        document.getElementById("system-status").textContent =
-          data.status ? data.status.toUpperCase() : "UNKNOWN";
-
-        document.getElementById("system-subtitle").textContent =
-          `SERVICE: ${data.service || "unknown"} | REGION: ${data.region || "unknown"} | ${data.timestamp || ""}`;
-
-        logMessage("Health endpoint returned status OK.");
-      } catch (error) {
-        document.getElementById("system-status").textContent = "ERROR";
-        document.getElementById("system-subtitle").textContent = "Health endpoint failed.";
-        logMessage(`Health check failed: ${error.message}`);
-      }
+    function nowStamp() {
+      return new Date().toLocaleTimeString();
     }
 
-    // --- Inbox API calls
-    // Three functions, GET, POST, and DELETE to /api/inbox
-    // Fx to fetch list of images from S3 via Lambda
-    async function loadInbox() {
-      try {
-        const res = await fetch(`${API}/api/inbox`);
-        const files = await res.json();
-        renderInbox(Array.isArray(files) ? files : []);
-        logMessage(`Loaded inbox with ${Array.isArray(files) ? files.length : 0} file(s).`);
-      } catch (error) {
-        renderInbox([]);
-        logMessage(`Failed to load inbox: ${error.message}`);
-      }
+    function formatDateTime(date) {
+      return date.toLocaleString();
     }
 
-    async function uploadFile(file) {
-      try {
-        const presignRes = await fetch(`${API}/api/inbox`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            filename: file.name
-          })
-        });
-
-        const presignData = await presignRes.json();
-
-        if (!presignRes.ok || !presignData.url) {
-          throw new Error("Could not get presigned URL.");
+    function App() {
+      const [health, setHealth] = useState({
+        status: "Loading",
+        service: "cmsc-website",
+        region: "us-east-1",
+        timestamp: ""
+      });
+      const [inboxFiles, setInboxFiles] = useState([]);
+      const [selectedFile, setSelectedFile] = useState("");
+      const [logs, setLogs] = useState([
+        `[${nowStamp()}] System boot sequence initialized.`,
+        `[${nowStamp()}] Waiting for API health check.`
+      ]);
+      const [records, setRecords] = useState([
+        {
+          filename: "demo_record.png",
+          status: "placeholder",
+          timestamp: formatDateTime(new Date())
         }
+      ]);
 
-        const uploadRes = await fetch(presignData.url, {
-          method: "PUT",
-          headers: {
-            "Content-Type": file.type || "image/png"
-          },
-          body: file
-        });
-
-        if (!uploadRes.ok) {
-          throw new Error("S3 upload failed.");
-        }
-
-        logMessage(`Uploaded ${file.name}`);
-        loadInbox();
-      } catch (error) {
-        logMessage(`Upload failed: ${error.message}`);
-        alert(`Upload failed: ${error.message}`);
+      function appendLog(message) {
+        setLogs((prev) => [`[${nowStamp()}] ${message}`, ...prev]);
       }
-    }
 
-    async function deleteFile(filename) {
-      try {
-        const res = await fetch(
-          `${API}/api/inbox/${encodeURIComponent(filename)}`,
-          {
-            method: "DELETE"
+      async function loadHealth() {
+        try {
+          const res = await fetch(`${API}/api/health`);
+          const data = await res.json();
+          setHealth({
+            status: data.status || "ok",
+            service: data.service || "cmsc-website",
+            region: data.region || "us-east-1",
+            timestamp: data.timestamp || ""
+          });
+          appendLog("Health endpoint responded successfully.");
+        } catch (error) {
+          setHealth((prev) => Object.assign({}, prev, { status: "error" }));
+          appendLog(`Health endpoint failed: ${error.message}`);
+        }
+      }
+
+      async function loadInbox() {
+        try {
+          const res = await fetch(`${API}/api/inbox`);
+          const data = await res.json();
+          const files = Array.isArray(data) ? data : [];
+          setInboxFiles(files);
+          if (files.length && !files.includes(selectedFile)) {
+            setSelectedFile(files[0]);
           }
-        );
+          if (!files.length) {
+            setSelectedFile("");
+          }
+          appendLog(`Inbox refreshed. ${files.length} item(s) loaded.`);
+        } catch (error) {
+          setInboxFiles([]);
+          setSelectedFile("");
+          appendLog(`Inbox load failed: ${error.message}`);
+        }
+      }
 
-        if (!res.ok) {
-          throw new Error("Delete failed.");
+      async function uploadFile(file) {
+        if (!file) return;
+
+        try {
+          appendLog(`Requesting upload URL for ${file.name}...`);
+          const presignRes = await fetch(`${API}/api/inbox`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ filename: file.name })
+          });
+
+          const presignData = await presignRes.json();
+
+          if (!presignRes.ok || !presignData.url) {
+            throw new Error("Could not get presigned upload URL.");
+          }
+
+          appendLog(`Uploading ${file.name} to inbox bucket...`);
+          const uploadRes = await fetch(presignData.url, {
+            method: "PUT",
+            headers: { "Content-Type": file.type || "image/png" },
+            body: file
+          });
+
+          if (!uploadRes.ok) {
+            throw new Error("S3 upload failed.");
+          }
+
+          appendLog(`Upload complete: ${file.name}`);
+          await loadInbox();
+          setSelectedFile(file.name);
+        } catch (error) {
+          appendLog(`Upload failed: ${error.message}`);
+          alert(`Upload failed: ${error.message}`);
+        }
+      }
+
+      async function deleteFile(filename) {
+        if (!filename) return;
+        try {
+          const res = await fetch(`${API}/api/inbox/${encodeURIComponent(filename)}`, {
+            method: "DELETE"
+          });
+
+          if (!res.ok) {
+            throw new Error("Delete failed.");
+          }
+
+          appendLog(`Deleted file: ${filename}`);
+          if (selectedFile === filename) {
+            setSelectedFile("");
+          }
+          await loadInbox();
+        } catch (error) {
+          appendLog(`Delete failed: ${error.message}`);
+          alert(`Delete failed: ${error.message}`);
+        }
+      }
+
+      function renderInbox() {
+        if (!inboxFiles.length) {
+          return h("div", { className: "empty-state" }, "No files in inbox.");
         }
 
-        logMessage(`Deleted ${filename}`);
+        return inboxFiles.map((filename) =>
+          h(
+            "div",
+            {
+              key: filename,
+              className: `inbox-item${selectedFile === filename ? " selected" : ""}`,
+              onClick: function () { setSelectedFile(filename); }
+            },
+            h("div", { className: "file-name" }, filename),
+            h(
+              "button",
+              {
+                className: "delete-x",
+                onClick: function (event) {
+                  event.stopPropagation();
+                  deleteFile(filename);
+                },
+                title: `Delete ${filename}`
+              },
+              "✕"
+            )
+          )
+        );
+      }
+
+      function handleProcess() {
+        if (!selectedFile) {
+          appendLog("No file selected for processing.");
+          return;
+        }
+
+        appendLog(`Processing started for ${selectedFile}.`);
+        appendLog(`Placeholder process completed for ${selectedFile}.`);
+
+        const newRecord = {
+          filename: selectedFile,
+          status: "processed",
+          timestamp: formatDateTime(new Date())
+        };
+
+        setRecords((prev) => [newRecord].concat(prev));
+      }
+
+      function loadRecords() {
+        appendLog("Records view loaded.");
+        setRecords((prev) => prev.length ? prev : [{
+          filename: "demo_record.png",
+          status: "placeholder",
+          timestamp: formatDateTime(new Date())
+        }]);
+      }
+
+      function clearRecords() {
+        setRecords([]);
+        appendLog("Records display cleared.");
+      }
+
+      function deleteAllRecords() {
+        setRecords([]);
+        appendLog("All displayed records deleted.");
+      }
+
+      function clearLog() {
+        setLogs([`[${nowStamp()}] Log cleared.`]);
+      }
+
+      useEffect(function () {
+        loadHealth();
         loadInbox();
-      } catch (error) {
-        logMessage(`Delete failed: ${error.message}`);
-        alert(`Delete failed: ${error.message}`);
-      }
+      }, []);
+
+      return h(
+        "div",
+        { className: "app-shell" },
+        h(
+          "header",
+          { className: "topbar" },
+          h(
+            "div",
+            { className: "brand" },
+            h("div", { className: "title" }, "Yellow Sign Diner"),
+            h(
+              "nav",
+              { className: "nav" },
+              h("span", { className: "nav-pill active" }, "Inbox"),
+              h("span", { className: "nav-pill" }, "Processor"),
+              h("span", { className: "nav-pill" }, "Records")
+            )
+          ),
+          h("div", { className: "nav" },
+            h("span", { className: "nav-pill" }, "AWS Ops"),
+            h("span", { className: "nav-pill" }, "Shift 04")
+          )
+        ),
+        h(
+          "section",
+          { className: "status-banner" },
+          h("div", { className: "status-label" }, "System Integration Status"),
+          h("div", { className: "status-main" }, String(health.status || "UNKNOWN").toUpperCase()),
+          h(
+            "div",
+            { className: "status-sub" },
+            `SERVICE: ${health.service || "cmsc-website"} | REGION: ${health.region || "us-east-1"} | ${health.timestamp || "Timestamp unavailable"}`
+          )
+        ),
+        h(
+          "main",
+          { className: "main-grid" },
+          h(
+            "section",
+            { className: "panel" },
+            h(
+              "div",
+              { className: "panel-title-row" },
+              h("h2", { className: "panel-title" }, "Inbox"),
+              h("div", { className: "panel-meta" }, `${inboxFiles.length} item(s)`)
+            ),
+            h("div", { className: "panel-scroll", id: "inbox-list" }, renderInbox()),
+            h(
+              "div",
+              { className: "upload-wrap" },
+              h("input", {
+                id: "file-input",
+                type: "file",
+                accept: "image/*",
+                style: { display: "none" },
+                onChange: function (event) {
+                  const file = event.target.files && event.target.files[0];
+                  uploadFile(file);
+                  event.target.value = "";
+                }
+              }),
+              h(
+                "button",
+                {
+                  id: "upload-btn",
+                  className: "ghost-button",
+                  onClick: function () {
+                    const input = document.getElementById("file-input");
+                    if (input) input.click();
+                  }
+                },
+                "Upload"
+              )
+            )
+          ),
+          h(
+            "section",
+            { className: "panel" },
+            h(
+              "div",
+              { className: "panel-title-row" },
+              h("h2", { className: "panel-title" }, "Process"),
+              h("div", { className: "panel-meta" }, "Manual trigger")
+            ),
+            h(
+              "div",
+              { className: "selection-card" },
+              h("div", { className: "selection-label" }, "Current Selection"),
+              h("div", { className: "selection-file" }, selectedFile || "No file selected")
+            ),
+            h(
+              "button",
+              {
+                id: "process-btn",
+                className: "section-button",
+                onClick: handleProcess
+              },
+              "Process"
+            ),
+            h(
+              "div",
+              { className: "log-card" },
+              h(
+                "div",
+                { className: "log-toolbar" },
+                h("span", null, "Terminal Output"),
+                h(
+                  "button",
+                  { className: "mini-btn", onClick: clearLog },
+                  "Clear Log"
+                )
+              ),
+              h(
+                "div",
+                { id: "log-area" },
+                logs.join("\n")
+              )
+            )
+          ),
+          h(
+            "section",
+            { className: "panel" },
+            h(
+              "div",
+              { className: "panel-title-row" },
+              h("h2", { className: "panel-title" }, "Records"),
+              h("div", { className: "panel-meta" }, `${records.length} row(s)`)
+            ),
+            h(
+              "div",
+              { className: "panel-scroll" },
+              h(
+                "table",
+                { className: "record-table", id: "records-table" },
+                h(
+                  "thead",
+                  null,
+                  h(
+                    "tr",
+                    null,
+                    h("th", null, "Filename"),
+                    h("th", null, "Status"),
+                    h("th", null, "Timestamp")
+                  )
+                ),
+                h(
+                  "tbody",
+                  null,
+                  records.length
+                    ? records.map((record, index) =>
+                        h(
+                          "tr",
+                          { key: `${record.filename}-${record.timestamp}-${index}`, className: index % 2 === 0 ? "record-row-even" : "" },
+                          h("td", null, record.filename),
+                          h("td", null, h("span", { className: "status-chip" }, record.status)),
+                          h("td", null, record.timestamp)
+                        )
+                      )
+                    : h(
+                        "tr",
+                        null,
+                        h(
+                          "td",
+                          { colSpan: 3, className: "empty-state" },
+                          "No records loaded."
+                        )
+                      )
+                )
+              )
+            ),
+            h(
+              "div",
+              { className: "button-row" },
+              h("button", { className: "ghost-button", onClick: loadRecords }, "Load Records"),
+              h("button", { className: "ghost-button", onClick: clearRecords }, "Clear"),
+              h("button", { className: "danger-button", onClick: deleteAllRecords }, "Delete All")
+            )
+          )
+        ),
+        h(
+          "footer",
+          { className: "footer-ticker" },
+          h("div", { className: "footer-label" }, "System Status: Nominal"),
+          h("div", { className: "footer-text" }, "Yellow Sign Diner operations panel — health route online — inbox API connected — root landing page active — serverless MVP loaded —")
+        )
+      );
     }
 
-    function renderInbox(files) {
-      const tbody = document.querySelector("#inbox-list tbody");
-      tbody.innerHTML = "";
-
-      if (!files.length) {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td colspan="2" class="muted">No files in inbox.</td>`;
-        tbody.appendChild(tr);
-        return;
-      }
-
-      files.forEach((filename) => {
-        const tr = document.createElement("tr");
-
-        tr.innerHTML = `
-          <td>${filename}</td>
-          <td style="text-align:right;">
-            <button class="danger-btn" data-file="${filename}">Delete</button>
-          </td>
-        `;
-
-        tbody.appendChild(tr);
-      });
-
-      tbody.querySelectorAll(".danger-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          deleteFile(btn.dataset.file);
-        });
-      });
-    }
-
-    function logMessage(message) {
-      const log = document.getElementById("log-area");
-      const line = `[${new Date().toLocaleTimeString()}] ${message}`;
-      log.textContent = line + "\n" + log.textContent;
-    }
-
-    document.getElementById("upload-btn").addEventListener("click", () => {
-      document.getElementById("file-input").click();
-    });
-
-    document.getElementById("file-input").addEventListener("change", () => {
-      const fileInput = document.getElementById("file-input");
-      if (fileInput.files[0]) {
-        uploadFile(fileInput.files[0]);
-      }
-      fileInput.value = "";
-    });
-
-    document.getElementById("process-btn").addEventListener("click", () => {
-      const log = document.getElementById("log-area");
-      const p = document.createElement("p");
-      p.textContent = `[${new Date().toLocaleTimeString()}] Process button clicked.`;
-      log.prepend(p);
-    });
-
-    loadHealth();
-    loadInbox();
+    ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
   </script>
 </body>
 </html>
