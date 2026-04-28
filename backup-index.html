@@ -244,12 +244,6 @@
       filter: brightness(1.04);
     }
 
-    .section-button:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-      filter: grayscale(0.2);
-    }
-
     .ghost-button {
       padding: 12px 14px;
       border: 2px solid rgba(254, 243, 199, 0.24);
@@ -580,11 +574,9 @@
           timestamp: formatDateTime(new Date())
         }
       ]);
-      const [isProcessing, setIsProcessing] = useState(false);
-      const [currentJobId, setCurrentJobId] = useState("");
 
       function appendLog(message) {
-        setLogs((prev) => prev.concat(`[${nowStamp()}] ${message}`));
+        setLogs((prev) => [`[${nowStamp()}] ${message}`, ...prev]);
       }
 
       async function loadHealth() {
@@ -715,93 +707,22 @@
         );
       }
 
-      async function handleProcess() {
+      function handleProcess() {
         if (!selectedFile) {
           appendLog("No file selected for processing.");
           return;
         }
 
-        if (isProcessing) {
-          appendLog("A process job is already running.");
-          return;
-        }
+        appendLog(`Processing started for ${selectedFile}.`);
+        appendLog(`Placeholder process completed for ${selectedFile}.`);
 
-        setIsProcessing(true);
-        setCurrentJobId("");
+        const newRecord = {
+          filename: selectedFile,
+          status: "processed",
+          timestamp: formatDateTime(new Date())
+        };
 
-        try {
-          appendLog(`Submitting process job for ${selectedFile}...`);
-
-          const res = await fetch(`${API}/api/jobs`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ filename: selectedFile })
-          });
-
-          const startData = await res.json().catch(function () { return {}; });
-
-          if (!res.ok) {
-            throw new Error(startData.message || startData.error || `Job submit failed with HTTP ${res.status}.`);
-          }
-
-          const jobId = startData.jobId || startData.job_id || startData.id;
-
-          if (!jobId) {
-            throw new Error("Job was created, but the response did not include a jobId.");
-          }
-
-          setCurrentJobId(jobId);
-          appendLog(`Job created: ${jobId}`);
-
-          const finalJob = await new Promise(function (resolve, reject) {
-            let attempts = 0;
-            const maxAttempts = 90;
-
-            const interval = setInterval(async function () {
-              attempts += 1;
-
-              try {
-                const poll = await fetch(`${API}/api/jobs/${encodeURIComponent(jobId)}`);
-                const job = await poll.json().catch(function () { return {}; });
-
-                if (!poll.ok) {
-                  throw new Error(job.message || job.error || `Job poll failed with HTTP ${poll.status}.`);
-                }
-
-                appendLog(job.message || `Job ${jobId} status: ${job.status || "RUNNING"}`);
-
-                if (job.status === "SUCCEEDED" || job.status === "FAILED") {
-                  clearInterval(interval);
-                  resolve(job);
-                  return;
-                }
-
-                if (attempts >= maxAttempts) {
-                  clearInterval(interval);
-                  reject(new Error("Job polling timed out."));
-                }
-              } catch (error) {
-                clearInterval(interval);
-                reject(error);
-              }
-            }, 2000);
-          });
-
-          const finalStatus = finalJob.status || "processed";
-
-          setRecords((prev) => [{
-            filename: selectedFile,
-            status: finalStatus,
-            timestamp: formatDateTime(new Date())
-          }].concat(prev));
-
-          appendLog(`Processing finished for ${selectedFile}: ${finalStatus}.`);
-        } catch (error) {
-          appendLog(`Processing failed: ${error.message}`);
-          alert(`Processing failed: ${error.message}`);
-        } finally {
-          setIsProcessing(false);
-        }
+        setRecords((prev) => [newRecord].concat(prev));
       }
 
       function loadRecords() {
@@ -831,13 +752,6 @@
         loadHealth();
         loadInbox();
       }, []);
-
-      useEffect(function () {
-        const log = document.getElementById("log-area");
-        if (log) {
-          log.scrollTop = log.scrollHeight;
-        }
-      }, [logs]);
 
       return h(
         "div",
@@ -921,7 +835,7 @@
               "div",
               { className: "panel-title-row" },
               h("h2", { className: "panel-title" }, "Process"),
-              h("div", { className: "panel-meta" }, currentJobId ? `Job ${currentJobId}` : (isProcessing ? "Running" : "Manual trigger"))
+              h("div", { className: "panel-meta" }, "Manual trigger")
             ),
             h(
               "div",
@@ -934,10 +848,9 @@
               {
                 id: "process-btn",
                 className: "section-button",
-                onClick: handleProcess,
-                disabled: isProcessing
+                onClick: handleProcess
               },
-              isProcessing ? "Processing..." : "Process"
+              "Process"
             ),
             h(
               "div",

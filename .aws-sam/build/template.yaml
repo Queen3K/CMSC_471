@@ -224,6 +224,207 @@ Resources:
       LogGroupName:
         Fn::Sub: /aws/lambda/${LInbox}
       RetentionInDays: 7
+  LSubmit:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description:
+        Fn::Sub:
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: LSubmit
+      CodeUri: LSubmit
+      Handler: handler.handler
+      Runtime: python3.13
+      Role:
+        Ref: LabRoleArn
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          JOB_TABLE:
+            Ref: JobsTable
+          STATE_MACHINE_ARN:
+            Ref: StateMachine
+      Events:
+        SubmitApi:
+          Type: Api
+          Properties:
+            Path: /api/jobs
+            Method: POST
+            RestApiId:
+              Ref: Api
+    Metadata:
+      SamResourceId: LSubmit
+  LSubmitLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName:
+        Fn::Sub: /aws/lambda/${LSubmit}
+      RetentionInDays: 7
+  JobsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: jobId
+        AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+      - AttributeName: jobId
+        KeyType: HASH
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+  L1Fetch:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: L1Fetch
+      Handler: l1fetch.handler
+      Runtime: python3.13
+      Role:
+        Ref: LabRoleArn
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          BUCKET:
+            Ref: InboxBucket
+    Metadata:
+      SamResourceId: L1Fetch
+  L1FetchLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName:
+        Fn::Sub: /aws/lambda/${L1Fetch}
+      RetentionInDays: 7
+  L2Call:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: L2Call
+      Handler: l2call.handler
+      Runtime: python3.13
+      Role:
+        Ref: LabRoleArn
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          JOB_TABLE:
+            Ref: JobsTable
+    Metadata:
+      SamResourceId: L2Call
+  L2CallLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName:
+        Fn::Sub: /aws/lambda/${L2Call}
+      RetentionInDays: 7
+  L3Save:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: L3Save
+      Handler: l3save.handler
+      Runtime: python3.13
+      Role:
+        Ref: LabRoleArn
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          JOB_TABLE:
+            Ref: JobsTable
+    Metadata:
+      SamResourceId: L3Save
+  L3SaveLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName:
+        Fn::Sub: /aws/lambda/${L3Save}
+      RetentionInDays: 7
+  StateMachine:
+    Type: AWS::Serverless::StateMachine
+    Properties:
+      Role:
+        Ref: LabRoleArn
+      Definition:
+        Comment: Shopping list image processing pipeline
+        StartAt: FetchImage
+        States:
+          FetchImage:
+            Type: Task
+            Resource: arn:aws:states:::lambda:invoke
+            Parameters:
+              FunctionName: ${L1FetchArn}
+              Payload.$: $
+            ResultSelector:
+              jobId.$: $.Payload.jobId
+              filename.$: $.Payload.filename
+              bucket.$: $.Payload.bucket
+            Next: CallTextract
+          CallTextract:
+            Type: Task
+            Resource: arn:aws:states:::lambda:invoke
+            Parameters:
+              FunctionName: ${L2CallArn}
+              Payload.$: $
+            ResultSelector:
+              jobId.$: $.Payload.jobId
+              filename.$: $.Payload.filename
+              bucket.$: $.Payload.bucket
+              items.$: $.Payload.items
+            Next: SaveResults
+          SaveResults:
+            Type: Task
+            Resource: arn:aws:states:::lambda:invoke
+            Parameters:
+              FunctionName: ${L3SaveArn}
+              Payload.$: $
+            ResultSelector:
+              jobId.$: $.Payload.jobId
+              rowCount.$: $.Payload.rowCount
+            End: true
+      Logging:
+        Level: ALL
+        IncludeExecutionData: true
+        Destinations:
+        - CloudWatchLogsLogGroup:
+            LogGroupArn:
+              Fn::GetAtt:
+              - StateMachineLogGroup
+              - Arn
+      Tracing:
+        Enabled: true
+      Type: STANDARD
+      DefinitionSubstitutions:
+        L1FetchArn:
+          Fn::GetAtt:
+          - L1Fetch
+          - Arn
+        L2CallArn:
+          Fn::GetAtt:
+          - L2Call
+          - Arn
+        L3SaveArn:
+          Fn::GetAtt:
+          - L3Save
+          - Arn
+  StateMachineLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName:
+        Fn::Sub:
+        - /aws/vendedlogs/states/${AWS::StackName}-${ResourceId}-Logs
+        - ResourceId: StateMachine
+      RetentionInDays: 7
 Outputs:
   HelloWorldApi:
     Description: API Gateway endpoint URL for Prod

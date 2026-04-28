@@ -27,4 +27,22 @@ manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
 packagetype = "Zip"
 functions = ["LInbox"]
 
+[function_build_definitions.d1c099b9-e103-44c2-9ee3-353ba7626257]
+codeuri = "c:\\Users\\QueenM\\Downloads\\CMSC_471\\src\\lsubmit"
+runtime = "python3.13"
+architecture = "x86_64"
+handler = "handler.handler"
+manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
+packagetype = "Zip"
+functions = ["LSubmit"]
+
+[function_build_definitions.92294160-ab82-4543-b9d3-026b4c93cb82]
+codeuri = "c:\\Users\\QueenM\\Downloads\\CMSC_471\\src\\statemachine"
+runtime = "python3.13"
+architecture = "x86_64"
+handler = "l1fetch.handler"
+manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
+packagetype = "Zip"
+functions = ["L1Fetch", "L2Call", "L3Save"]
+
 [layer_build_definitions]

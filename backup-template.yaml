@@ -204,8 +204,7 @@ Resources:
     Properties:
       LogGroupName: !Sub /aws/lambda/${LInbox}
       RetentionInDays: 7
-
-  LSubmit:
+  lsubmit:
     Type: AWS::Serverless::Function
     Properties:
       Description: !Sub
@@ -220,40 +219,43 @@ Resources:
       Tracing: Active
       Environment:
         Variables:
-          JOB_TABLE: !Ref JobsTable
-          STATE_MACHINE_ARN: !Ref StateMachine
+          #TODO: Add variables for lsubmit
+          Variables:
+            JOB_TABLE: !Ref JobsTable
+            STATE_MACHINE_ARN: !Ref StateMachine
       Events:
         SubmitApi:
+          ApiGET: null
           Type: Api
           Properties:
             Path: /api/jobs
             Method: POST
             RestApiId: !Ref Api
-
-  LSubmitLogGroup:
+  lsubmitLogGroup:
     Type: AWS::Logs::LogGroup
     DeletionPolicy: Delete
     UpdateReplacePolicy: Delete
     Properties:
-      LogGroupName: !Sub /aws/lambda/${LSubmit}
+      LogGroupName: !Sub /aws/lambda/${lsubmit}
       RetentionInDays: 7
-
   JobsTable:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: jobId
+        - AttributeName: jobid
           AttributeType: S
       BillingMode: PAY_PER_REQUEST
       KeySchema:
-        - AttributeName: jobId
+        - AttributeName: jobid
           KeyType: HASH
       StreamSpecification:
         StreamViewType: NEW_AND_OLD_IMAGES
-
   L1Fetch:
     Type: AWS::Serverless::Function
     Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: L1Fetch
       CodeUri: src/statemachine
       Handler: l1fetch.handler
       Runtime: python3.13
@@ -264,7 +266,6 @@ Resources:
       Environment:
         Variables:
           BUCKET: !Ref InboxBucket
-
   L1FetchLogGroup:
     Type: AWS::Logs::LogGroup
     DeletionPolicy: Delete
@@ -272,10 +273,12 @@ Resources:
     Properties:
       LogGroupName: !Sub /aws/lambda/${L1Fetch}
       RetentionInDays: 7
-
   L2Call:
     Type: AWS::Serverless::Function
     Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: L2Call
       CodeUri: src/statemachine
       Handler: l2call.handler
       Runtime: python3.13
@@ -283,10 +286,7 @@ Resources:
       MemorySize: 3008
       Timeout: 30
       Tracing: Active
-      Environment:
-        Variables:
-          JOB_TABLE: !Ref JobsTable
-
+      Environment: {}
   L2CallLogGroup:
     Type: AWS::Logs::LogGroup
     DeletionPolicy: Delete
@@ -294,10 +294,12 @@ Resources:
     Properties:
       LogGroupName: !Sub /aws/lambda/${L2Call}
       RetentionInDays: 7
-
   L3Save:
     Type: AWS::Serverless::Function
     Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: L3Save
       CodeUri: src/statemachine
       Handler: l3save.handler
       Runtime: python3.13
@@ -305,10 +307,7 @@ Resources:
       MemorySize: 3008
       Timeout: 30
       Tracing: Active
-      Environment:
-        Variables:
-          JOB_TABLE: !Ref JobsTable
-
+      Environment: {}
   L3SaveLogGroup:
     Type: AWS::Logs::LogGroup
     DeletionPolicy: Delete
@@ -316,7 +315,6 @@ Resources:
     Properties:
       LogGroupName: !Sub /aws/lambda/${L3Save}
       RetentionInDays: 7
-
   StateMachine:
     Type: AWS::Serverless::StateMachine
     Properties:
@@ -360,15 +358,19 @@ Resources:
               jobId.$: $.Payload.jobId
               rowCount.$: $.Payload.rowCount
             End: true
+
       Logging:
         Level: ALL
         IncludeExecutionData: true
         Destinations:
           - CloudWatchLogsLogGroup:
               LogGroupArn: !GetAtt StateMachineLogGroup.Arn
+
       Tracing:
         Enabled: true
+
       Type: STANDARD
+
       DefinitionSubstitutions:
         L1FetchArn: !GetAtt L1Fetch.Arn
         L2CallArn: !GetAtt L2Call.Arn
@@ -380,7 +382,6 @@ Resources:
       LogGroupName: !Sub
         - /aws/vendedlogs/states/${AWS::StackName}-${ResourceId}-Logs
         - ResourceId: StateMachine
-      RetentionInDays: 7
 
 Outputs:
   HelloWorldApi:
