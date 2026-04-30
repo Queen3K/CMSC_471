@@ -1,47 +1,38 @@
 import json
 import os
 import boto3
+import uuid
+from datetime import datetime, timezone
 
 dynamodb = boto3.resource("dynamodb")
-rds = boto3.client("rds-data")
 
 
 def handler(event, context):
     job_id = event["jobId"]
     items = event.get("items", [])
 
-    db_arn = os.environ["DB_ARN"]
-    secret_arn = os.environ["DB_SECRET"]
-    database = os.environ["DB_NAME"]
+    records_table = dynamodb.Table(os.environ["RECORDS_TABLE"])
 
     for item in items:
-        rds.execute_statement(
-            resourceArn=db_arn,
-            secretArn=secret_arn,
-            database=database,
-            sql="INSERT INTO shopping_list (job_id, item) VALUES (:job_id, :item)",
-            parameters=[
-                {
-                    "name": "job_id",
-                    "value": {"stringValue": job_id}
-                },
-                {
-                    "name": "item",
-                    "value": {"stringValue": str(item)}
-                }
-            ]
+        records_table.put_item(
+            Item={
+                "id": str(uuid.uuid4()),
+                "job_id": job_id,
+                "item": str(item),
+                "created_at": datetime.now(timezone.utc).isoformat()
+            }
         )
 
     dynamodb.Table(os.environ["JOB_TABLE"]).update_item(
         Key={"jobId": job_id},
-        UpdateExpression="SET #s = :s, #m = :m",
+        UpdateExpression="SET #s = :v1, #m = :v2",
         ExpressionAttributeNames={
             "#s": "status",
             "#m": "message"
         },
         ExpressionAttributeValues={
-            ":s": "SUCCEEDED",
-            ":m": f"Saved {len(items)} items to table"
+            ":v1": "SUCCEEDED",
+            ":v2": f"Saved {len(items)} items to table"
         }
     )
 

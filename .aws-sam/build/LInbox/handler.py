@@ -2,6 +2,7 @@ import json
 import boto3
 import os
 from botocore.client import Config
+from urllib.parse import unquote_plus
 
 s3 = boto3.client(
     "s3",
@@ -56,6 +57,7 @@ def handler(event, context):
 
     if method == "DELETE":
         key = event["pathParameters"]["key"]
+        key = unquote_plus(key)
         s3.delete_object(Bucket=BUCKET, Key=key)
 
         return {

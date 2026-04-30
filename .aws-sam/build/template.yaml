@@ -340,6 +340,8 @@ Resources:
         Variables:
           JOB_TABLE:
             Ref: JobsTable
+          RECORDS_TABLE:
+            Ref: RecordsTable
     Metadata:
       SamResourceId: L3Save
   L3SaveLogGroup:
@@ -424,6 +426,94 @@ Resources:
         Fn::Sub:
         - /aws/vendedlogs/states/${AWS::StackName}-${ResourceId}-Logs
         - ResourceId: StateMachine
+      RetentionInDays: 7
+  LPoll:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description:
+        Fn::Sub:
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: LPoll
+      CodeUri: LPoll
+      Handler: lpoll.handler
+      Runtime: python3.13
+      Role:
+        Ref: LabRoleArn
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          JOB_TABLE:
+            Ref: JobsTable
+      Events:
+        ApiGETPoll:
+          Type: Api
+          Properties:
+            Path: /api/jobs/{jobId}
+            Method: GET
+            RestApiId:
+              Ref: Api
+    Metadata:
+      SamResourceId: LPoll
+  LPollLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName:
+        Fn::Sub: /aws/lambda/${LPoll}
+      RetentionInDays: 7
+  RecordsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+  LRecords:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Records API for saved shopping list items
+      CodeUri: LRecords
+      Handler: lrecords.handler
+      Runtime: python3.13
+      Role:
+        Ref: LabRoleArn
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          RECORDS_TABLE:
+            Ref: RecordsTable
+      Events:
+        ApiGETRecords:
+          Type: Api
+          Properties:
+            Path: /api/records
+            Method: GET
+            RestApiId:
+              Ref: Api
+        ApiDELETERecord:
+          Type: Api
+          Properties:
+            Path: /api/records/{id}
+            Method: DELETE
+            RestApiId:
+              Ref: Api
+    Metadata:
+      SamResourceId: LRecords
+  LRecordsLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName:
+        Fn::Sub: /aws/lambda/${LRecords}
       RetentionInDays: 7
 Outputs:
   HelloWorldApi:

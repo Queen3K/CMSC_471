@@ -45,4 +45,22 @@ manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
 packagetype = "Zip"
 functions = ["L1Fetch", "L2Call", "L3Save"]
 
+[function_build_definitions.5f307572-f1eb-4133-a0dc-7f04c853077b]
+codeuri = "c:\\Users\\QueenM\\Downloads\\CMSC_471\\src\\lpoll"
+runtime = "python3.13"
+architecture = "x86_64"
+handler = "lpoll.handler"
+manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
+packagetype = "Zip"
+functions = ["LPoll"]
+
+[function_build_definitions.f475dc7c-b2ec-4f65-9970-d378b5d6fe80]
+codeuri = "c:\\Users\\QueenM\\Downloads\\CMSC_471\\src\\lrecords"
+runtime = "python3.13"
+architecture = "x86_64"
+handler = "lrecords.handler"
+manifest_hash = "d41d8cd98f00b204e9800998ecf8427e"
+packagetype = "Zip"
+functions = ["LRecords"]
+
 [layer_build_definitions]
