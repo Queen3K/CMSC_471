@@ -772,6 +772,7 @@
 
                 if (job.status === "SUCCEEDED" || job.status === "FAILED") {
                   clearInterval(interval);
+                  await loadRecords();
                   resolve(job);
                   return;
                 }
@@ -804,13 +805,58 @@
         }
       }
 
-      function loadRecords() {
-        appendLog("Records view loaded.");
-        setRecords((prev) => prev.length ? prev : [{
-          filename: "demo_record.png",
-          status: "placeholder",
-          timestamp: formatDateTime(new Date())
-        }]);
+      async function loadRecords() {
+        try {
+          appendLog("Loading records from API...");
+
+          const res = await fetch(`${API}/api/records`);
+          const rows = await res.json().catch(function () { return []; });
+
+          if (!res.ok) {
+            throw new Error((rows && (rows.message || rows.error)) || `Records request failed with HTTP ${res.status}.`);
+          }
+
+          const safeRows = Array.isArray(rows) ? rows : [];
+
+          const mappedRecords = safeRows.map(function (row, index) {
+            return {
+              id: row.id || row.recordId || row.record_id || row.itemId || row.item_id || "",
+              filename: row.item || row.filename || row.name || `record-${index + 1}`,
+              status: row.status || "saved",
+              timestamp: row.created_at || row.createdAt || row.timestamp || formatDateTime(new Date())
+            };
+          });
+
+          setRecords(mappedRecords);
+          appendLog(`Records loaded. ${mappedRecords.length} row(s) found.`);
+        } catch (error) {
+          appendLog(`Records load failed: ${error.message}`);
+          alert(`Records load failed: ${error.message}`);
+        }
+      }
+
+      async function deleteRecord(id) {
+        if (!id) {
+          appendLog("Cannot delete record because no record id was provided.");
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API}/api/records/${encodeURIComponent(id)}`, {
+            method: "DELETE"
+          });
+
+          if (!res.ok) {
+            const data = await res.json().catch(function () { return {}; });
+            throw new Error(data.message || data.error || `Delete record failed with HTTP ${res.status}.`);
+          }
+
+          appendLog(`Deleted record: ${id}`);
+          await loadRecords();
+        } catch (error) {
+          appendLog(`Record delete failed: ${error.message}`);
+          alert(`Record delete failed: ${error.message}`);
+        }
       }
 
       function clearRecords() {
@@ -830,6 +876,7 @@
       useEffect(function () {
         loadHealth();
         loadInbox();
+        loadRecords();
       }, []);
 
       useEffect(function () {
@@ -992,10 +1039,23 @@
                     ? records.map((record, index) =>
                         h(
                           "tr",
-                          { key: `${record.filename}-${record.timestamp}-${index}`, className: index % 2 === 0 ? "record-row-even" : "" },
+                          { key: `${record.id || record.filename}-${record.timestamp}-${index}`, className: index % 2 === 0 ? "record-row-even" : "" },
                           h("td", null, record.filename),
                           h("td", null, h("span", { className: "status-chip" }, record.status)),
-                          h("td", null, record.timestamp)
+                          h(
+                            "td",
+                            null,
+                            record.timestamp,
+                            record.id ? h(
+                              "button",
+                              {
+                                className: "delete-x",
+                                onClick: function () { deleteRecord(record.id); },
+                                title: `Delete record ${record.id}`
+                              },
+                              "✕"
+                            ) : null
+                          )
                         )
                       )
                     : h(
