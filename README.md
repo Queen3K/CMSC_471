@@ -114,7 +114,7 @@ Summary:
 - Upfront cost: $0.00
 - Monthly estimate: $5.93
 - 12-month estimate: $71.16
-- Region: **US East (N. Virginia)
+- Region: US East (N. Virginia)
 - Services included: S3, API Gateway, Lambda, Step Functions, DynamoDB, Textract, and CloudWatch
 
 ________________________________________________________________________________________________
