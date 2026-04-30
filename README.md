@@ -62,22 +62,37 @@ ________________________________________________________________________________
 # User Stories and Tasks
 
 Task: Create SAM template and API Gateway
+
 Task: Build health endpoint (GET /api/health)
+
 Task: Build landing page route (GET /)
+
 Task: Create frontend S3 bucket and upload index.html
+
 Task: Create inbox S3 bucket
+
 Task: Build inbox Lambda (GET /api/inbox)
+
 Task: Add inbox upload (POST /api/inbox)
+
 Task: Add inbox delete (DELETE /api/inbox/{key})
+
 Task: Working Inbox Graphic Upload Button
+
 Task: Process button
+
 Task: Process_State_Machine
+
 Task: Complete DynamoDB records workflow and final frontend/backend integration
 
 1. GitHub commit link: https://github.com/Queen3K/CMSC_471/commit/a1a1850280ca941253b1b9276acb85b64248cd5e - Create SAM template and got working website
+
 2. GitHub commit link: https://github.com/Queen3K/CMSC_471/commit/29fa86090b567a69c338361feb38f131c3f0c2a3 - Build inbox upload/delete
+
 3. GitHub commit link: https://github.com/Queen3K/CMSC_471/commit/6569d6035631fcbd2ca808fd8965105931a77b50 - Add processing pipline
+
 4. GitHub commit link: https://github.com/Queen3K/CMSC_471/commit/f305c042de8db4a42d1b0687eb3b658d35aae74f - Add records workflow, and updated it to fix a issue
+
 5. GitHub commit link: https://github.com/Queen3K/CMSC_471/commit/5e16c74bce25b516818cd7e3fa9b20a15df9c0d3 - Final debugging/fixes
 
 
@@ -108,13 +123,21 @@ ________________________________________________________________________________
 The submitted template.yaml includes comments explaining each major section, including:
 
 API Gateway
+
 Frontend S3 bucket
+
 Inbox S3 bucket
+
 Lambda functions
+
 Step Functions state machine
+
 JobsTable
+
 RecordsTable
+
 CloudWatch log groups
+
 Outputs
 
 ________________________________________________________________________________________________
