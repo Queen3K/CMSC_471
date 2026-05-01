@@ -56,33 +56,33 @@ The Azure DevOps board was used to track the user story, tasks, bugs, Gherkin wo
 
 ## Populated Board
 
-![Populated Azure DevOps Board](DevOps%20BDD%20Evidence/devops-populated-board.PNG)
+![Populated Azure DevOps Board](devops-bdd-evidence/devops-populated-board.PNG)
 
 ## User Story with Acceptance Criteria and GitHub Links
 
-![User Story Acceptance Criteria and GitHub Links](DevOps%20BDD%20Evidence/devops-user-story-acceptance-criteria-and-links.PNG)
+![User Story Acceptance Criteria and GitHub Links](devops-bdd-evidence/devops-user-story-acceptance-criteria-and-links.PNG)
 
 ## GitHub Commits Linked with AB#5
 
-![GitHub Commits Linked with AB#5](DevOps%20BDD%20Evidence/devops-github-commits-linked-ab5.PNG)
+![GitHub Commits Linked with AB#5](devops-bdd-evidence/devops-github-commits-linked-ab5.PNG)
 
 ## Closed Related Work Items
 
-![Closed Related Work Items](DevOps%20BDD%20Evidence/devops-closed-related-work-items.PNG)
+![Closed Related Work Items](devops-bdd-evidence/devops-closed-related-work-items.PNG)
 
 ## Individual Task Linked to GitHub Commit
 
-![Task Linked to GitHub Commit](DevOps%20BDD%20Evidence/devops-task-linked-github-commit.PNG)
+![Task Linked to GitHub Commit](devops-bdd-evidence/devops-task-linked-github-commit.PNG)
 
 ## Gherkin Files in GitHub
 
-![Gherkin Files in GitHub](DevOps%20BDD%20Evidence/github-gherkin-files.PNG)
+![Gherkin Files in GitHub](devops-bdd-evidence/github-gherkin-files.PNG)
 
 ## VS Code Project Structure
 
-![VS Code Project Structure 1](DevOps%20BDD%20Evidence/vscode-project-structure-1.PNG)
+![VS Code Project Structure 1](devops-bdd-evidence/vscode-project-structure-1.PNG)
 
-![VS Code Project Structure 2](DevOps%20BDD%20Evidence/vscode-project-structure-2.PNG)
+![VS Code Project Structure 2](devops-bdd-evidence/vscode-project-structure-2.PNG)
 
 ________________________________________________________________________________________________
 
@@ -192,7 +192,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the Azure DevOps board contains project work items, including user stories, tasks, bugs, and completed project work.
 
-![Populated Azure DevOps Board](DevOps%20BDD%20Evidence/devops-populated-board.PNG)
+![Populated Azure DevOps Board](devops-bdd-evidence/devops-populated-board.PNG)
 
 ---
 
@@ -200,7 +200,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the main user story, acceptance criteria, related tasks/bugs, and GitHub commit traceability.
 
-![User Story Acceptance Criteria and GitHub Links](DevOps%20BDD%20Evidence/devops-user-story-acceptance-criteria-and-links.PNG)
+![User Story Acceptance Criteria and GitHub Links](devops-bdd-evidence/devops-user-story-acceptance-criteria-and-links.PNG)
 
 ---
 
@@ -208,7 +208,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows GitHub commits linked to Azure DevOps using the `AB#5` format.
 
-![GitHub Commits Linked with AB#5](DevOps%20BDD%20Evidence/devops-github-commits-linked-ab5.PNG)
+![GitHub Commits Linked with AB#5](devops-bdd-evidence/devops-github-commits-linked-ab5.PNG)
 
 ---
 
@@ -216,7 +216,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows tasks and bugs marked Closed, proving implementation work was completed.
 
-![Closed Related Work Items](DevOps%20BDD%20Evidence/devops-closed-related-work-items.PNG)
+![Closed Related Work Items](devops-bdd-evidence/devops-closed-related-work-items.PNG)
 
 ---
 
@@ -224,7 +224,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows an individual DevOps task connected to a GitHub commit in the Development section.
 
-![Task Linked to GitHub Commit](DevOps%20BDD%20Evidence/devops-task-linked-github-commit.PNG)
+![Task Linked to GitHub Commit](devops-bdd-evidence/devops-task-linked-github-commit.PNG)
 
 ---
 
@@ -232,27 +232,17 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows both student Gherkin feature files checked into the GitHub repository.
 
-![Gherkin Files in GitHub](DevOps%20BDD%20Evidence/github-gherkin-files.PNG)
+![Gherkin Files in GitHub](devops-bdd-evidence/github-gherkin-files.PNG)
 
 ---
 
-### VS Code Project Structure 1
+### VS Code Project Structure
 
-**What it proves:** Shows the local project structure with source folders, tests, Lambda folders, and project files.
+**What it proves:** Shows the local project structure with source folders, tests, Lambda folders, README, template, and project files.
 
-![VS Code Project Structure 1](DevOps%20BDD%20Evidence/vscode-project-structure-1.PNG)
+![VS Code Project Structure 1](devops-bdd-evidence/vscode-project-structure-1.PNG)
 
----
-
-### VS Code Project Structure 2
-
-**What it proves:** Shows additional project files including README, template, frontend files, pricing PDF, and screenshots.
-
-![VS Code Project Structure 2](DevOps%20BDD%20Evidence/vscode-project-structure-2.PNG)
-
----
-
-> **Important Note:** Some Azure DevOps task dates/times may not perfectly match the original coding dates because several work items were updated after the implementation was already completed. Most commits are linked to Azure DevOps using `AB#5`. A small number of GitHub commits may not appear in the Development section because the `AB#5` tag was accidentally left out of those commit messages during the project.
+![VS Code Project Structure 2](devops-bdd-evidence/vscode-project-structure-2.PNG)
 
 ---
 
@@ -262,7 +252,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the SAM template validates successfully.
 
-![SAM Validate](SAM%20commands%20working/sam%20validate.png)
+![SAM Validate](sam-commands-working/sam%20validate.png)
 
 ---
 
@@ -270,7 +260,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the SAM project builds successfully.
 
-![SAM Build](SAM%20commands%20working/sam%20build.png)
+![SAM Build](sam-commands-working/sam%20build.png)
 
 ---
 
@@ -278,7 +268,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the AWS stack deploys successfully or is already up to date.
 
-![SAM Deploy](SAM%20commands%20working/SAM%20deploy.PNG)
+![SAM Deploy](sam-commands-working/SAM%20deploy.PNG)
 
 ---
 
@@ -286,7 +276,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the frontend `index.html` file was uploaded to the S3 website bucket.
 
-![Frontend Upload Command](SAM%20commands%20working/Frontend%20upload%20command.png)
+![Frontend Upload Command](sam-commands-working/Frontend%20upload%20command.png)
 
 ---
 
@@ -294,7 +284,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the AWS resources created by the SAM/CloudFormation stack.
 
-![CloudFormation Stack Resources](SAM%20commands%20working/CloudFormation%20stacks%20resources.png)
+![CloudFormation Stack Resources](sam-commands-working/CloudFormation%20stacks%20resources.png)
 
 ---
 
@@ -302,7 +292,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows stack outputs such as deployed API and bucket information.
 
-![CloudFormation Stack Outputs](SAM%20commands%20working/CloudFormation%20stacks%20outputs.png)
+![CloudFormation Stack Outputs](sam-commands-working/CloudFormation%20stacks%20outputs.png)
 
 ---
 
@@ -312,7 +302,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the deployed Yellow Sign Diner web app working with Inbox, Process, Records, Textract output, and saved records.
 
-![Working Website Screenshot](AWS%20Architecture%204%20Tiers%20Evidence/3.1%20Working%20Website%20Screenshot/working-website.png)
+![Working Website Screenshot](aws-architecture-evidence/3.1%20Working%20Website%20Screenshot/working-website.png)
 
 ---
 
@@ -320,7 +310,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the visual AWS architecture with API Gateway, Lambda, S3, Step Functions, DynamoDB, and related resources.
 
-![Infrastructure Composer Diagram](AWS%20Architecture%204%20Tiers%20Evidence/3.2%20Infrastructure%20Composer%20Diagram/infrastructure-composer-png.PNG)
+![Infrastructure Composer Diagram](aws-architecture-evidence/3.2%20Infrastructure%20Composer%20Diagram/infrastructure-composer-png.PNG)
 
 ---
 
@@ -328,9 +318,9 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the orchestration tier where Step Functions successfully runs `FetchImage`, `CallTextract`, and `SaveResults`.
 
-![Step Functions Executions](AWS%20Architecture%204%20Tiers%20Evidence/3.3%20Step%20Functions%20Workflow/step-functions-executions.png)
+![Step Functions Executions](aws-architecture-evidence/3.3%20Step%20Functions%20Workflow/step-functions-executions.png)
 
-![Step Functions Success Graph](AWS%20Architecture%204%20Tiers%20Evidence/3.3%20Step%20Functions%20Workflow/step-functions-success-graph.png)
+![Step Functions Success Graph](aws-architecture-evidence/3.3%20Step%20Functions%20Workflow/step-functions-success-graph.png)
 
 ---
 
@@ -338,7 +328,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the deployed API Gateway routes used by the frontend.
 
-![API Gateway Routes](AWS%20Architecture%204%20Tiers%20Evidence/3.4%20API%20Gateway%20Routes/api-gateway-routes-terminal.png)
+![API Gateway Routes](aws-architecture-evidence/3.4%20API%20Gateway%20Routes/api-gateway-routes-terminal.png)
 
 ---
 
@@ -346,7 +336,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the frontend bucket and inbox bucket used by the application.
 
-![S3 Buckets](AWS%20Architecture%204%20Tiers%20Evidence/3.5%20S3%20Buckets/s3-buckets.png)
+![S3 Buckets](aws-architecture-evidence/3.5%20S3%20Buckets/s3-buckets.png)
 
 ---
 
@@ -354,9 +344,9 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows DynamoDB tables used for job status and saved records.
 
-![DynamoDB Tables](AWS%20Architecture%204%20Tiers%20Evidence/3.6%20DynamoDB%20Tables/dynamodb-tables.png)
+![DynamoDB Tables](aws-architecture-evidence/3.6%20DynamoDB%20Tables/dynamodb-tables.png)
 
-![DynamoDB RecordsTable Items](AWS%20Architecture%204%20Tiers%20Evidence/3.6%20DynamoDB%20Tables/dynamodb-records-table-items.png)
+![DynamoDB RecordsTable Items](aws-architecture-evidence/3.6%20DynamoDB%20Tables/dynamodb-records-table-items.png)
 
 ---
 
@@ -364,9 +354,9 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows CloudWatch log groups and Lambda log stream evidence for monitoring and troubleshooting.
 
-![CloudWatch Log Groups](AWS%20Architecture%204%20Tiers%20Evidence/3.7%20CloudWatch%20Logs/cloudwatch-log-groups.png)
+![CloudWatch Log Groups](aws-architecture-evidence/3.7%20CloudWatch%20Logs/cloudwatch-log-groups.png)
 
-![CloudWatch L2Call Logs](AWS%20Architecture%204%20Tiers%20Evidence/3.7%20CloudWatch%20Logs/cloudwatch-l2call-logs.png)
+![CloudWatch L2Call Logs](aws-architecture-evidence/3.7%20CloudWatch%20Logs/cloudwatch-l2call-logs.png)
 
 ---
 
@@ -376,9 +366,9 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows both S3 buckets block public access.
 
-![Frontend Bucket Block Public Access](Security%20Compliance%20Evidence/4.1%20S3%20Block%20Public%20Access/s3-frontend-block-public-access.png)
+![Frontend Bucket Block Public Access](security-compliance-evidence/4.1%20S3%20Block%20Public%20Access/s3-frontend-block-public-access.png)
 
-![Inbox Bucket Block Public Access](Security%20Compliance%20Evidence/4.1%20S3%20Block%20Public%20Access/s3-inbox-block-public-access.png)
+![Inbox Bucket Block Public Access](security-compliance-evidence/4.1%20S3%20Block%20Public%20Access/s3-inbox-block-public-access.png)
 
 ---
 
@@ -386,9 +376,9 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows both S3 buckets use default server-side encryption.
 
-![Frontend Bucket Encryption](Security%20Compliance%20Evidence/4.2%20S3%20Encryption/s3-frontend-encryption.png)
+![Frontend Bucket Encryption](security-compliance-evidence/4.2%20S3%20Encryption/s3-frontend-encryption.png)
 
-![Inbox Bucket Encryption](Security%20Compliance%20Evidence/4.2%20S3%20Encryption/s3-inbox-encryption.png)
+![Inbox Bucket Encryption](security-compliance-evidence/4.2%20S3%20Encryption/s3-inbox-encryption.png)
 
 ---
 
@@ -396,9 +386,9 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows `LabRoleArn` and `Role: !Ref LabRoleArn`, proving IAM role usage is configured through the SAM template instead of hard-coded credentials.
 
-![IAM Role in template.yaml](Security%20Compliance%20Evidence/4.3%20IAM%20Role%20in%20template.yaml/template-iam-role.png)
+![IAM Role in template.yaml](security-compliance-evidence/4.3%20IAM%20Role%20in%20template.yaml/template-iam-role.png)
 
-![LabRole Parameter in template.yaml](Security%20Compliance%20Evidence/4.3%20IAM%20Role%20in%20template.yaml/template-labrole-parameter.png)
+![LabRole Parameter in template.yaml](security-compliance-evidence/4.3%20IAM%20Role%20in%20template.yaml/template-labrole-parameter.png)
 
 ---
 
@@ -406,7 +396,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows CloudWatch log retention is configured with `RetentionInDays: 7`.
 
-![CloudWatch Retention](Security%20Compliance%20Evidence/4.4%20CloudWatch%20Retention/cloudwatch-retention.png)
+![CloudWatch Retention](security-compliance-evidence/4.4%20CloudWatch%20Retention/cloudwatch-retention.png)
 
 ---
 
@@ -414,11 +404,11 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the application uses API Gateway as the controlled entry point instead of exposing backend AWS resources directly.
 
-![API Gateway Controlled Entry Point](Security%20Compliance%20Evidence/4.5%20API%20Gateway%20as%20Controlled%20Entry%20Point/api-gateway-routes-terminal.png)
+![API Gateway Controlled Entry Point](security-compliance-evidence/4.5%20API%20Gateway%20as%20Controlled%20Entry%20Point/api-gateway-routes-terminal.png)
 
-![Template IAM Role Evidence](Security%20Compliance%20Evidence/4.5%20API%20Gateway%20as%20Controlled%20Entry%20Point/template-iam-role.png)
+![Template IAM Role Evidence](security-compliance-evidence/4.5%20API%20Gateway%20as%20Controlled%20Entry%20Point/template-iam-role.png)
 
-![Working Website Records Evidence](Security%20Compliance%20Evidence/4.5%20API%20Gateway%20as%20Controlled%20Entry%20Point/working-website-records.png)
+![Working Website Records Evidence](security-compliance-evidence/4.5%20API%20Gateway%20as%20Controlled%20Entry%20Point/working-website-records.png)
 
 ---
 
@@ -428,29 +418,29 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the SAM template has comments explaining major resource sections.
 
-![template.yaml Proof 1](template.yaml%20with%20comments%20proof/template.yaml%20proof%201.png)
+![template.yaml Proof 1](template-yaml-comments-proof/template.yaml%20proof%201.png)
 
-![template.yaml Proof 2](template.yaml%20with%20comments%20proof/template.yaml%20proof%202.PNG)
+![template.yaml Proof 2](template-yaml-comments-proof/template.yaml%20proof%202.PNG)
 
-![template.yaml Proof 3](template.yaml%20with%20comments%20proof/template.yaml%20proof%203.png)
+![template.yaml Proof 3](template-yaml-comments-proof/template.yaml%20proof%203.png)
 
-![template.yaml Proof 4](template.yaml%20with%20comments%20proof/template.yaml%20proof%204.png)
+![template.yaml Proof 4](template-yaml-comments-proof/template.yaml%20proof%204.png)
 
-![template.yaml Proof 5](template.yaml%20with%20comments%20proof/template.yaml%20proof%205.png)
+![template.yaml Proof 5](template-yaml-comments-proof/template.yaml%20proof%205.png)
 
-![template.yaml Proof 6](template.yaml%20with%20comments%20proof/template.yaml%20proof%206.png)
+![template.yaml Proof 6](template-yaml-comments-proof/template.yaml%20proof%206.png)
 
-![template.yaml Proof 7](template.yaml%20with%20comments%20proof/template.yaml%20proof%207.png)
+![template.yaml Proof 7](template-yaml-comments-proof/template.yaml%20proof%207.png)
 
-![template.yaml Proof 8](template.yaml%20with%20comments%20proof/template.yaml%20proof%208.png)
+![template.yaml Proof 8](template-yaml-comments-proof/template.yaml%20proof%208.png)
 
-![template.yaml Proof 9](template.yaml%20with%20comments%20proof/template.yaml%20proof%209.png)
+![template.yaml Proof 9](template-yaml-comments-proof/template.yaml%20proof%209.png)
 
-![template.yaml Proof 10](template.yaml%20with%20comments%20proof/template.yaml%20proof%2010.png)
+![template.yaml Proof 10](template-yaml-comments-proof/template.yaml%20proof%2010.png)
 
-![template.yaml Proof 11](template.yaml%20with%20comments%20proof/template.yaml%20proof%2011.png)
+![template.yaml Proof 11](template-yaml-comments-proof/template.yaml%20proof%2011.png)
 
-![template.yaml Proof 12](template.yaml%20with%20comments%20proof/template.yaml%20proof%2012.png)
+![template.yaml Proof 12](template-yaml-comments-proof/template.yaml%20proof%2012.png)
 
 ________________________________________________________________________________________________
 
