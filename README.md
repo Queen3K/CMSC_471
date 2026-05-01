@@ -1,6 +1,12 @@
 #Made by Mitchell Brown and Owen Ferko
 
-#Serverless image processing system, this is what the system does, Architecture description, AWS cost estimate
+#System Diagram
+
+#AWS Pricing Calculator Quote
+
+#Website Screenshot
+
+#Side Note
 
 This project demonstrates a minimum viable four tier AWS serverless architecture for image processing. The application lets a user upload an image, store it in an S3 inbox bucket, process the selected image through an AWS Step Functions workflow extract text with Amazon Textract, and display the extracted records in a web dashboard. The system was built with AWS SAM and Infrastructure as Code so the application can be validated, built, deployed, updated, and removed through repeatable CLI commands instead of manual console configuration. The project follows the required tiered architecture. The presentation tier is a React-based 'index.html' dashboard stored in an S3 frontend bucket and returned through the root API route. The API/compute tier uses API Gateway and Lambda functions for health checks, inbox management, job submission, job polling, and record management. The orchestration tier uses AWS Step Functions to coordinate the processing pipeline through 'L1Fetch', 'L2Call', and 'L3Save'. The persistence tier uses S3 for uploaded images, 'JobsTable' in DynamoDB for asynchronous job state, and 'RecordsTable' in DynamoDB for extracted text records. CloudWatch provides logging and monitoring evidence for the Lambda functions and Step Functions workflow. DevOps work was tracked through Azure DevOps user stories and implementation tasks. User stories acted as acceptance tests, while tasks represented the code changes needed to satisfy those tests. GitHub commits were linked to Devops work items using the 'AB#5' format to provide traceability between requirements and technical implementation. A Gherkin '.feature' file was added to document behavior driven development scenarios for uploading, processing, extracting, saving, and viewing records. This supports the required DevOps and BDD mapping by connecting requirements, implementation, and verification evidence. Security and compliance were addressed through AWS managed services, IAM roles, API Gateway routes, S3 buckets, DynamoDB tables, and CloudWatch logs. Uploaded files are not managed directly by users in the AWS console, instead the browser interacts with API Gateway and Lambda functions. Lambda functions control access to S3 and DynamoDB operations. The system avoids hard coded AWS credentials and relies on the SAM template to define roles, routes, tables, buckets, and functions. I also fixed an inbox deletion issue for filenames with spaces by decoding the URL path before deleting the S3 object, which improves reliability and correctness. For the Total Cost of Ownership, I used AWS Pricing Calculator to estimate the yearly cost of running this project. The estimate includes Amazon S3, Amazon API Gateway, AWS Lambda, AWS Step Functions, Amazon DynamoDB, Amazon Textract, and Amazon CloudWatch. The usage estimate assumes a small project workload with 1 GB of S3 storage, 5,000 API Gateway requests per month, 5,000 Lambda requests per month, 100 Step Functions workflow requests per month with 3 state transitions per workflow, 1 GB of DynamoDB storage, 100 Textract pages/images per month, and 1 GB of CloudWatch log ingestion. The AWS Pricing Calculator estimated the project at $5.93 per month and $71.16 for 12 months, with $0.00 upfront cost. The largest cost in the estimate is API Gateway at about $5.00 per month. The remaining are low due to architecture being mostly serverless and pay per use. This supports the cost optimization goal because the project does not require always running EC2 instances or a continuously running database server. The diagram below shows the full serverless workflow. The user enters through API Gateway, which routes requests to Lambda functions for the frontend, inbox actions, job submission, job polling, and record management. Uploaded images are stored in S3, Step Functions coordinates the Textract processing pipeline, DynamoDB stores job status and extracted records, and CloudWatch provides logging for debugging and monitoring.
 
@@ -44,11 +50,29 @@ ________________________________________________________________________________
 
 # DevOps Board Evidence
 
+The Azure DevOps board was used to track the project user story, tasks, bugs, Gherkin work, and documentation work. GitHub commits were linked to Azure DevOps using the `AB#5` format.
 
+> **Important Note:** Some Azure DevOps task dates/times may not perfectly match the original coding dates because several work items were updated after the implementation was already completed. Most commits are linked to Azure DevOps using `AB#5`. A small number of GitHub commits may not appear in the Development section because the `AB#5` tag was accidentally left out of those commit messages during the project.
 
+## Populated Board
 
+![Populated Azure DevOps Board](DevOps%20BDD%20Evidence/devops-populated-board.png)
 
+## User Story with Acceptance Criteria and GitHub Links
 
+![User Story Acceptance Criteria and GitHub Links](DevOps%20BDD%20Evidence/devops-user-story-acceptance-criteria-and-links.png)
+
+## GitHub Commits Linked with AB#5
+
+![GitHub Commits Linked with AB#5](DevOps%20BDD%20Evidence/devops-github-commits-linked-ab5.png)
+
+## Closed Related Work Items
+
+![Closed Related Work Items](DevOps%20BDD%20Evidence/devops-closed-related-work-items.png)
+
+## Gherkin Files in GitHub
+
+![Gherkin Files in GitHub](DevOps%20BDD%20Evidence/github-gherkin-files.png)
 
 ________________________________________________________________________________________________
 
@@ -148,7 +172,65 @@ ________________________________________________________________________________
 
 # Proof of Work Evidence
 
+The project evidence is organized into folders based on the rubric categories.
 
+## DevOps and BDD Evidence
+
+| Evidence | File | What it proves |
+|---|---|---|
+| Populated Azure DevOps board | `DevOps BDD Evidence/devops-populated-board.png` | Shows the board contains project work items |
+| User story with acceptance criteria and links | `DevOps BDD Evidence/devops-user-story-acceptance-criteria-and-links.png` | Shows the main user story, acceptance criteria, GitHub links, and related work |
+| Closed related work items | `DevOps BDD Evidence/devops-closed-related-work-items.png` | Shows tasks and bugs marked Closed |
+| GitHub commits linked with AB#5 | `DevOps BDD Evidence/devops-github-commits-linked-ab5.png` | Shows commit traceability through Azure DevOps |
+| Individual task linked to GitHub commit | `DevOps BDD Evidence/devops-task-linked-github-commit.png` | Shows a task connected to a GitHub commit |
+| Gherkin files in GitHub | `DevOps BDD Evidence/github-gherkin-files.png` | Shows each student’s `.feature` file |
+| VS Code project structure | `DevOps BDD Evidence/vscode-project-structure-1.png` | Shows source folders, tests, README, template, and project files |
+
+> **Important Note:** Some Azure DevOps task dates/times may not perfectly match the original coding dates because several work items were updated after the implementation was already completed. Most commits are linked to Azure DevOps using `AB#5`. A small number of GitHub commits may not appear in the Development section because the `AB#5` tag was accidentally left out of those commit messages during the project.
+
+## SAM Commands and Infrastructure as Code Evidence
+
+| Evidence | File | What it proves |
+|---|---|---|
+| SAM validate | `SAM commands working/sam-validate.png` | Shows the SAM template validates successfully |
+| SAM build | `SAM commands working/sam-build.png` | Shows the project builds successfully |
+| SAM deploy | `SAM commands working/sam-deploy.png` | Shows the stack deploys or is already up to date |
+| CloudFormation resources | `SAM commands working/cloudformation-resources.png` | Shows AWS resources created from the template |
+| CloudFormation outputs | `SAM commands working/cloudformation-outputs.png` | Shows stack outputs such as API and bucket information |
+
+## AWS Architecture 4 Tiers Evidence
+
+| Evidence | File | What it proves |
+|---|---|---|
+| Working website with records | `AWS Architecture 4 Tiers Evidence/working-website-records.png` | Shows the live app, Textract results, and Records panel |
+| Infrastructure Composer diagram | `AWS Architecture 4 Tiers Evidence/infrastructure-composer.png` | Shows the deployed architecture visually |
+| Step Functions executions | `AWS Architecture 4 Tiers Evidence/step-functions-executions.png` | Shows the state machine exists and has successful executions |
+| Step Functions success graph | `AWS Architecture 4 Tiers Evidence/step-functions-success-graph.png` | Shows FetchImage → CallTextract → SaveResults completed |
+| API Gateway routes | `AWS Architecture 4 Tiers Evidence/api-gateway-routes-terminal.png` | Shows deployed API Gateway routes |
+| S3 buckets | `AWS Architecture 4 Tiers Evidence/s3-buckets.png` | Shows the frontend and inbox buckets |
+| DynamoDB tables | `AWS Architecture 4 Tiers Evidence/dynamodb-tables.png` | Shows JobsTable and RecordsTable |
+| DynamoDB records | `AWS Architecture 4 Tiers Evidence/dynamodb-records-table-items.png` | Shows extracted records saved in DynamoDB |
+| CloudWatch log groups | `AWS Architecture 4 Tiers Evidence/cloudwatch-log-groups.png` | Shows logging resources exist |
+| L2Call log streams | `AWS Architecture 4 Tiers Evidence/cloudwatch-l2call-logs.png` | Shows Textract Lambda log stream evidence |
+
+## Security and Compliance Evidence
+
+| Evidence | File | What it proves |
+|---|---|---|
+| Frontend bucket block public access | `Security Compliance Evidence/s3-frontend-block-public-access.png` | Shows frontend bucket blocks public access |
+| Inbox bucket block public access | `Security Compliance Evidence/s3-inbox-block-public-access.png` | Shows inbox bucket blocks public access |
+| Frontend bucket encryption | `Security Compliance Evidence/s3-frontend-encryption.png` | Shows default encryption enabled |
+| Inbox bucket encryption | `Security Compliance Evidence/s3-inbox-encryption.png` | Shows default encryption enabled |
+| IAM role in template.yaml | `Security Compliance Evidence/template-iam-role.png` | Shows LabRoleArn and `Role: !Ref LabRoleArn` |
+| CloudWatch retention | `Security Compliance Evidence/cloudwatch-retention.png` | Shows `RetentionInDays: 7` |
+
+## Commented template.yaml Evidence
+
+| Evidence | File | What it proves |
+|---|---|---|
+| Commented SAM template | `template.yaml with comments/template-comments.png` | Shows major sections of `template.yaml` are commented |
+| Template IAM role usage | `template.yaml with comments/template-iam-role.png` | Shows the LabRoleArn parameter and role reference |
+| Template security settings | `template.yaml with comments/template-security-settings.png` | Shows S3 encryption, public access block, and secure transport policy |
 
 ________________________________________________________________________________________________
 
