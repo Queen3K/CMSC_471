@@ -78,6 +78,12 @@ The Azure DevOps board was used to track the user story, tasks, bugs, Gherkin wo
 
 ![Gherkin Files in GitHub](DevOps%20BDD%20Evidence/github-gherkin-files.PNG)
 
+## VS Code Project Structure
+
+![VS Code Project Structure 1](DevOps%20BDD%20Evidence/vscode-project-structure-1.PNG)
+
+![VS Code Project Structure 2](DevOps%20BDD%20Evidence/vscode-project-structure-2.PNG)
+
 ________________________________________________________________________________________________
 
 ## Gherkin Feature Files
@@ -306,7 +312,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the deployed Yellow Sign Diner web app working with Inbox, Process, Records, Textract output, and saved records.
 
-![Working Website Screenshot](AWS%20Architecture%204%20Tiers%20Evidence/3.1%20Working%20Website%20Screenshot/working-website-records.png)
+![Working Website Screenshot](AWS%20Architecture%204%20Tiers%20Evidence/3.1%20Working%20Website%20Screenshot/working-website.png)
 
 ---
 
@@ -314,7 +320,7 @@ The project evidence is organized into folders based on the rubric categories. E
 
 **What it proves:** Shows the visual AWS architecture with API Gateway, Lambda, S3, Step Functions, DynamoDB, and related resources.
 
-![Infrastructure Composer Diagram](AWS%20Architecture%204%20Tiers%20Evidence/3.2%20Infrastructure%20Composer%20Diagram/infrastructure-composer.png)
+![Infrastructure Composer Diagram](AWS%20Architecture%204%20Tiers%20Evidence/3.2%20Infrastructure%20Composer%20Diagram/infrastructure-composer-png.PNG)
 
 ---
 
@@ -392,6 +398,8 @@ The project evidence is organized into folders based on the rubric categories. E
 
 ![IAM Role in template.yaml](Security%20Compliance%20Evidence/4.3%20IAM%20Role%20in%20template.yaml/template-iam-role.png)
 
+![LabRole Parameter in template.yaml](Security%20Compliance%20Evidence/4.3%20IAM%20Role%20in%20template.yaml/template-labrole-parameter.png)
+
 ---
 
 ### CloudWatch Retention
@@ -407,6 +415,10 @@ The project evidence is organized into folders based on the rubric categories. E
 **What it proves:** Shows the application uses API Gateway as the controlled entry point instead of exposing backend AWS resources directly.
 
 ![API Gateway Controlled Entry Point](Security%20Compliance%20Evidence/4.5%20API%20Gateway%20as%20Controlled%20Entry%20Point/api-gateway-routes-terminal.png)
+
+![Template IAM Role Evidence](Security%20Compliance%20Evidence/4.5%20API%20Gateway%20as%20Controlled%20Entry%20Point/template-iam-role.png)
+
+![Working Website Records Evidence](Security%20Compliance%20Evidence/4.5%20API%20Gateway%20as%20Controlled%20Entry%20Point/working-website-records.png)
 
 ---
 
