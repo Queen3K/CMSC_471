@@ -50,29 +50,33 @@ ________________________________________________________________________________
 
 # DevOps Board Evidence
 
-The Azure DevOps board was used to track the project user story, tasks, bugs, Gherkin work, and documentation work. GitHub commits were linked to Azure DevOps using the `AB#5` format.
+The Azure DevOps board was used to track the user story, tasks, bugs, Gherkin work, and documentation work. GitHub commits were linked to Azure DevOps using the `AB#5` format.
 
 > **Important Note:** Some Azure DevOps task dates/times may not perfectly match the original coding dates because several work items were updated after the implementation was already completed. Most commits are linked to Azure DevOps using `AB#5`. A small number of GitHub commits may not appear in the Development section because the `AB#5` tag was accidentally left out of those commit messages during the project.
 
 ## Populated Board
 
-![Populated Azure DevOps Board](DevOps%20BDD%20Evidence/devops-populated-board.png)
+![Populated Azure DevOps Board](DevOps%20BDD%20Evidence/devops-populated-board.PNG)
 
 ## User Story with Acceptance Criteria and GitHub Links
 
-![User Story Acceptance Criteria and GitHub Links](DevOps%20BDD%20Evidence/devops-user-story-acceptance-criteria-and-links.png)
+![User Story Acceptance Criteria and GitHub Links](DevOps%20BDD%20Evidence/devops-user-story-acceptance-criteria-and-links.PNG)
 
 ## GitHub Commits Linked with AB#5
 
-![GitHub Commits Linked with AB#5](DevOps%20BDD%20Evidence/devops-github-commits-linked-ab5.png)
+![GitHub Commits Linked with AB#5](DevOps%20BDD%20Evidence/devops-github-commits-linked-ab5.PNG)
 
 ## Closed Related Work Items
 
-![Closed Related Work Items](DevOps%20BDD%20Evidence/devops-closed-related-work-items.png)
+![Closed Related Work Items](DevOps%20BDD%20Evidence/devops-closed-related-work-items.PNG)
+
+## Individual Task Linked to GitHub Commit
+
+![Task Linked to GitHub Commit](DevOps%20BDD%20Evidence/devops-task-linked-github-commit.PNG)
 
 ## Gherkin Files in GitHub
 
-![Gherkin Files in GitHub](DevOps%20BDD%20Evidence/github-gherkin-files.png)
+![Gherkin Files in GitHub](DevOps%20BDD%20Evidence/github-gherkin-files.PNG)
 
 ________________________________________________________________________________________________
 
@@ -172,65 +176,269 @@ ________________________________________________________________________________
 
 # Proof of Work Evidence
 
-The project evidence is organized into folders based on the rubric categories.
+The project evidence is organized into folders based on the rubric categories. Each image below shows the proof used for the final project portfolio.
+
+---
 
 ## DevOps and BDD Evidence
 
-| Evidence | File | What it proves |
-|---|---|---|
-| Populated Azure DevOps board | `DevOps BDD Evidence/devops-populated-board.png` | Shows the board contains project work items |
-| User story with acceptance criteria and links | `DevOps BDD Evidence/devops-user-story-acceptance-criteria-and-links.png` | Shows the main user story, acceptance criteria, GitHub links, and related work |
-| Closed related work items | `DevOps BDD Evidence/devops-closed-related-work-items.png` | Shows tasks and bugs marked Closed |
-| GitHub commits linked with AB#5 | `DevOps BDD Evidence/devops-github-commits-linked-ab5.png` | Shows commit traceability through Azure DevOps |
-| Individual task linked to GitHub commit | `DevOps BDD Evidence/devops-task-linked-github-commit.png` | Shows a task connected to a GitHub commit |
-| Gherkin files in GitHub | `DevOps BDD Evidence/github-gherkin-files.png` | Shows each student’s `.feature` file |
-| VS Code project structure | `DevOps BDD Evidence/vscode-project-structure-1.png` | Shows source folders, tests, README, template, and project files |
+### Populated Azure DevOps Board
+
+**What it proves:** Shows the Azure DevOps board contains project work items, including user stories, tasks, bugs, and completed project work.
+
+![Populated Azure DevOps Board](DevOps%20BDD%20Evidence/devops-populated-board.PNG)
+
+---
+
+### User Story with Acceptance Criteria and GitHub Links
+
+**What it proves:** Shows the main user story, acceptance criteria, related tasks/bugs, and GitHub commit traceability.
+
+![User Story Acceptance Criteria and GitHub Links](DevOps%20BDD%20Evidence/devops-user-story-acceptance-criteria-and-links.PNG)
+
+---
+
+### GitHub Commits Linked with AB#5
+
+**What it proves:** Shows GitHub commits linked to Azure DevOps using the `AB#5` format.
+
+![GitHub Commits Linked with AB#5](DevOps%20BDD%20Evidence/devops-github-commits-linked-ab5.PNG)
+
+---
+
+### Closed Related Work Items
+
+**What it proves:** Shows tasks and bugs marked Closed, proving implementation work was completed.
+
+![Closed Related Work Items](DevOps%20BDD%20Evidence/devops-closed-related-work-items.PNG)
+
+---
+
+### Individual Task Linked to GitHub Commit
+
+**What it proves:** Shows an individual DevOps task connected to a GitHub commit in the Development section.
+
+![Task Linked to GitHub Commit](DevOps%20BDD%20Evidence/devops-task-linked-github-commit.PNG)
+
+---
+
+### Gherkin Files in GitHub
+
+**What it proves:** Shows both student Gherkin feature files checked into the GitHub repository.
+
+![Gherkin Files in GitHub](DevOps%20BDD%20Evidence/github-gherkin-files.PNG)
+
+---
+
+### VS Code Project Structure 1
+
+**What it proves:** Shows the local project structure with source folders, tests, Lambda folders, and project files.
+
+![VS Code Project Structure 1](DevOps%20BDD%20Evidence/vscode-project-structure-1.PNG)
+
+---
+
+### VS Code Project Structure 2
+
+**What it proves:** Shows additional project files including README, template, frontend files, pricing PDF, and screenshots.
+
+![VS Code Project Structure 2](DevOps%20BDD%20Evidence/vscode-project-structure-2.PNG)
+
+---
 
 > **Important Note:** Some Azure DevOps task dates/times may not perfectly match the original coding dates because several work items were updated after the implementation was already completed. Most commits are linked to Azure DevOps using `AB#5`. A small number of GitHub commits may not appear in the Development section because the `AB#5` tag was accidentally left out of those commit messages during the project.
 
+---
+
 ## SAM Commands and Infrastructure as Code Evidence
 
-| Evidence | File | What it proves |
-|---|---|---|
-| SAM validate | `SAM commands working/sam-validate.png` | Shows the SAM template validates successfully |
-| SAM build | `SAM commands working/sam-build.png` | Shows the project builds successfully |
-| SAM deploy | `SAM commands working/sam-deploy.png` | Shows the stack deploys or is already up to date |
-| CloudFormation resources | `SAM commands working/cloudformation-resources.png` | Shows AWS resources created from the template |
-| CloudFormation outputs | `SAM commands working/cloudformation-outputs.png` | Shows stack outputs such as API and bucket information |
+### SAM Validate
+
+**What it proves:** Shows the SAM template validates successfully.
+
+![SAM Validate](SAM%20commands%20working/sam%20validate.png)
+
+---
+
+### SAM Build
+
+**What it proves:** Shows the SAM project builds successfully.
+
+![SAM Build](SAM%20commands%20working/sam%20build.png)
+
+---
+
+### SAM Deploy
+
+**What it proves:** Shows the AWS stack deploys successfully or is already up to date.
+
+![SAM Deploy](SAM%20commands%20working/SAM%20deploy.PNG)
+
+---
+
+### Frontend Upload Command
+
+**What it proves:** Shows the frontend `index.html` file was uploaded to the S3 website bucket.
+
+![Frontend Upload Command](SAM%20commands%20working/Frontend%20upload%20command.png)
+
+---
+
+### CloudFormation Stack Resources
+
+**What it proves:** Shows the AWS resources created by the SAM/CloudFormation stack.
+
+![CloudFormation Stack Resources](SAM%20commands%20working/CloudFormation%20stacks%20resources.png)
+
+---
+
+### CloudFormation Stack Outputs
+
+**What it proves:** Shows stack outputs such as deployed API and bucket information.
+
+![CloudFormation Stack Outputs](SAM%20commands%20working/CloudFormation%20stacks%20outputs.png)
+
+---
 
 ## AWS Architecture 4 Tiers Evidence
 
-| Evidence | File | What it proves |
-|---|---|---|
-| Working website with records | `AWS Architecture 4 Tiers Evidence/working-website-records.png` | Shows the live app, Textract results, and Records panel |
-| Infrastructure Composer diagram | `AWS Architecture 4 Tiers Evidence/infrastructure-composer.png` | Shows the deployed architecture visually |
-| Step Functions executions | `AWS Architecture 4 Tiers Evidence/step-functions-executions.png` | Shows the state machine exists and has successful executions |
-| Step Functions success graph | `AWS Architecture 4 Tiers Evidence/step-functions-success-graph.png` | Shows FetchImage → CallTextract → SaveResults completed |
-| API Gateway routes | `AWS Architecture 4 Tiers Evidence/api-gateway-routes-terminal.png` | Shows deployed API Gateway routes |
-| S3 buckets | `AWS Architecture 4 Tiers Evidence/s3-buckets.png` | Shows the frontend and inbox buckets |
-| DynamoDB tables | `AWS Architecture 4 Tiers Evidence/dynamodb-tables.png` | Shows JobsTable and RecordsTable |
-| DynamoDB records | `AWS Architecture 4 Tiers Evidence/dynamodb-records-table-items.png` | Shows extracted records saved in DynamoDB |
-| CloudWatch log groups | `AWS Architecture 4 Tiers Evidence/cloudwatch-log-groups.png` | Shows logging resources exist |
-| L2Call log streams | `AWS Architecture 4 Tiers Evidence/cloudwatch-l2call-logs.png` | Shows Textract Lambda log stream evidence |
+### Working Website Screenshot
 
-## Security and Compliance Evidence
+**What it proves:** Shows the deployed Yellow Sign Diner web app working with Inbox, Process, Records, Textract output, and saved records.
 
-| Evidence | File | What it proves |
-|---|---|---|
-| Frontend bucket block public access | `Security Compliance Evidence/s3-frontend-block-public-access.png` | Shows frontend bucket blocks public access |
-| Inbox bucket block public access | `Security Compliance Evidence/s3-inbox-block-public-access.png` | Shows inbox bucket blocks public access |
-| Frontend bucket encryption | `Security Compliance Evidence/s3-frontend-encryption.png` | Shows default encryption enabled |
-| Inbox bucket encryption | `Security Compliance Evidence/s3-inbox-encryption.png` | Shows default encryption enabled |
-| IAM role in template.yaml | `Security Compliance Evidence/template-iam-role.png` | Shows LabRoleArn and `Role: !Ref LabRoleArn` |
-| CloudWatch retention | `Security Compliance Evidence/cloudwatch-retention.png` | Shows `RetentionInDays: 7` |
+![Working Website Screenshot](AWS%20Architecture%204%20Tiers%20Evidence/3.1%20Working%20Website%20Screenshot/working-website-records.png)
+
+---
+
+### Infrastructure Composer Diagram
+
+**What it proves:** Shows the visual AWS architecture with API Gateway, Lambda, S3, Step Functions, DynamoDB, and related resources.
+
+![Infrastructure Composer Diagram](AWS%20Architecture%204%20Tiers%20Evidence/3.2%20Infrastructure%20Composer%20Diagram/infrastructure-composer.png)
+
+---
+
+### Step Functions Workflow
+
+**What it proves:** Shows the orchestration tier where Step Functions successfully runs `FetchImage`, `CallTextract`, and `SaveResults`.
+
+![Step Functions Executions](AWS%20Architecture%204%20Tiers%20Evidence/3.3%20Step%20Functions%20Workflow/step-functions-executions.png)
+
+![Step Functions Success Graph](AWS%20Architecture%204%20Tiers%20Evidence/3.3%20Step%20Functions%20Workflow/step-functions-success-graph.png)
+
+---
+
+### API Gateway Routes
+
+**What it proves:** Shows the deployed API Gateway routes used by the frontend.
+
+![API Gateway Routes](AWS%20Architecture%204%20Tiers%20Evidence/3.4%20API%20Gateway%20Routes/api-gateway-routes-terminal.png)
+
+---
+
+### S3 Buckets
+
+**What it proves:** Shows the frontend bucket and inbox bucket used by the application.
+
+![S3 Buckets](AWS%20Architecture%204%20Tiers%20Evidence/3.5%20S3%20Buckets/s3-buckets.png)
+
+---
+
+### DynamoDB Tables
+
+**What it proves:** Shows DynamoDB tables used for job status and saved records.
+
+![DynamoDB Tables](AWS%20Architecture%204%20Tiers%20Evidence/3.6%20DynamoDB%20Tables/dynamodb-tables.png)
+
+![DynamoDB RecordsTable Items](AWS%20Architecture%204%20Tiers%20Evidence/3.6%20DynamoDB%20Tables/dynamodb-records-table-items.png)
+
+---
+
+### CloudWatch Logs
+
+**What it proves:** Shows CloudWatch log groups and Lambda log stream evidence for monitoring and troubleshooting.
+
+![CloudWatch Log Groups](AWS%20Architecture%204%20Tiers%20Evidence/3.7%20CloudWatch%20Logs/cloudwatch-log-groups.png)
+
+![CloudWatch L2Call Logs](AWS%20Architecture%204%20Tiers%20Evidence/3.7%20CloudWatch%20Logs/cloudwatch-l2call-logs.png)
+
+---
+
+## Security Compliance Evidence
+
+### S3 Block Public Access
+
+**What it proves:** Shows both S3 buckets block public access.
+
+![Frontend Bucket Block Public Access](Security%20Compliance%20Evidence/4.1%20S3%20Block%20Public%20Access/s3-frontend-block-public-access.png)
+
+![Inbox Bucket Block Public Access](Security%20Compliance%20Evidence/4.1%20S3%20Block%20Public%20Access/s3-inbox-block-public-access.png)
+
+---
+
+### S3 Encryption
+
+**What it proves:** Shows both S3 buckets use default server-side encryption.
+
+![Frontend Bucket Encryption](Security%20Compliance%20Evidence/4.2%20S3%20Encryption/s3-frontend-encryption.png)
+
+![Inbox Bucket Encryption](Security%20Compliance%20Evidence/4.2%20S3%20Encryption/s3-inbox-encryption.png)
+
+---
+
+### IAM Role in template.yaml
+
+**What it proves:** Shows `LabRoleArn` and `Role: !Ref LabRoleArn`, proving IAM role usage is configured through the SAM template instead of hard-coded credentials.
+
+![IAM Role in template.yaml](Security%20Compliance%20Evidence/4.3%20IAM%20Role%20in%20template.yaml/template-iam-role.png)
+
+---
+
+### CloudWatch Retention
+
+**What it proves:** Shows CloudWatch log retention is configured with `RetentionInDays: 7`.
+
+![CloudWatch Retention](Security%20Compliance%20Evidence/4.4%20CloudWatch%20Retention/cloudwatch-retention.png)
+
+---
+
+### API Gateway as Controlled Entry Point
+
+**What it proves:** Shows the application uses API Gateway as the controlled entry point instead of exposing backend AWS resources directly.
+
+![API Gateway Controlled Entry Point](Security%20Compliance%20Evidence/4.5%20API%20Gateway%20as%20Controlled%20Entry%20Point/api-gateway-routes-terminal.png)
+
+---
 
 ## Commented template.yaml Evidence
 
-| Evidence | File | What it proves |
-|---|---|---|
-| Commented SAM template | `template.yaml with comments/template-comments.png` | Shows major sections of `template.yaml` are commented |
-| Template IAM role usage | `template.yaml with comments/template-iam-role.png` | Shows the LabRoleArn parameter and role reference |
-| Template security settings | `template.yaml with comments/template-security-settings.png` | Shows S3 encryption, public access block, and secure transport policy |
+### Commented template.yaml
+
+**What it proves:** Shows the SAM template has comments explaining major resource sections.
+
+![template.yaml Proof 1](template.yaml%20with%20comments%20proof/template.yaml%20proof%201.png)
+
+![template.yaml Proof 2](template.yaml%20with%20comments%20proof/template.yaml%20proof%202.PNG)
+
+![template.yaml Proof 3](template.yaml%20with%20comments%20proof/template.yaml%20proof%203.png)
+
+![template.yaml Proof 4](template.yaml%20with%20comments%20proof/template.yaml%20proof%204.png)
+
+![template.yaml Proof 5](template.yaml%20with%20comments%20proof/template.yaml%20proof%205.png)
+
+![template.yaml Proof 6](template.yaml%20with%20comments%20proof/template.yaml%20proof%206.png)
+
+![template.yaml Proof 7](template.yaml%20with%20comments%20proof/template.yaml%20proof%207.png)
+
+![template.yaml Proof 8](template.yaml%20with%20comments%20proof/template.yaml%20proof%208.png)
+
+![template.yaml Proof 9](template.yaml%20with%20comments%20proof/template.yaml%20proof%209.png)
+
+![template.yaml Proof 10](template.yaml%20with%20comments%20proof/template.yaml%20proof%2010.png)
+
+![template.yaml Proof 11](template.yaml%20with%20comments%20proof/template.yaml%20proof%2011.png)
+
+![template.yaml Proof 12](template.yaml%20with%20comments%20proof/template.yaml%20proof%2012.png)
 
 ________________________________________________________________________________________________
 
