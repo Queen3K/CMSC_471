@@ -98,12 +98,39 @@ Task: Complete DynamoDB records workflow and final frontend/backend integration
 
 ________________________________________________________________________________________________
 
-#Well Architected Questions and Answers
+# Well Architected Questions and Answers
 
 
+1. **How does the project enforce separation of concerns across tiers?**  
+   The application uses a four-tier architecture. The presentation tier is the React-based `index.html` in S3, the API/compute tier uses API Gateway and Lambda, the orchestration tier uses Step Functions, and the persistence tier uses S3 and DynamoDB. Each tier handles its own responsibility.
 
+2. **How does the project provide traceability between requirements and code?**  
+   GitHub commits are linked to Azure DevOps work items using the `AB#5` format. User stories act as acceptance tests, and tasks represent the code changes that satisfy them.
 
+3. **How does Behavior-Driven Development support verification?**  
+   A Gherkin `.feature` file in `tests/Acceptance/Features/` documents BDD scenarios for uploading, processing, extracting, saving, and viewing records. This connects requirements, implementation, and verification evidence.
 
+4. **How does the project follow the principle of least privilege?**  
+   IAM roles defined in `template.yaml` grant each Lambda only the permissions it needs. For example, `LInbox` accesses the inbox S3 bucket, while `LRecords` accesses `RecordsTable`. No function has unrestricted account-wide access.
+
+5. **How does Step Functions improve workflow visibility?**  
+   Step Functions coordinates `L1Fetch`, `L2Call`, and `L3Save` as discrete states. Each state transition is recorded, so the execution history shows exactly where a job is in the pipeline and where any failure occurred.
+
+6. **How does the system handle filenames containing special characters?**  
+   The inbox delete handler URL-decodes the path key before issuing the S3 delete call. This fixed an earlier bug where files with spaces in the name could not be removed.
+
+7. **How can the entire stack be recovered if it is lost or corrupted?**  
+   Because the stack is fully defined in `template.yaml`, running `sam deploy` rebuilds every resource — buckets, tables, roles, routes, and functions — from source. No manual console reconfiguration is required.
+
+8. **How does the architecture support scaling under increased load?**  
+   All compute and storage services scale automatically. Lambda adds concurrent executions on demand, API Gateway absorbs request bursts, DynamoDB scales reads and writes per the table configuration, and S3 has effectively unlimited object storage.
+
+9. **How is the cleanup process managed at end of life?**  
+   The `aws cloudformation delete-stack` command removes the entire deployed stack in a single action. This avoids leaving behind orphaned buckets, tables, or Lambda functions that would continue to incur cost.
+
+10. **How does the project produce evidence that the system actually works?**  
+    Evidence is gathered from multiple sources: CloudWatch logs for Lambda and Step Functions runs, screenshots of the working website, GitHub commit history linked to DevOps tasks, and the Gherkin acceptance scenarios. Together these document that the system was built, tested, and reviewed.
+    
 ________________________________________________________________________________________________
 
 #AWS Pricing Calculator Quote
