@@ -260,42 +260,42 @@ ________________________________________________________________________________
 ### 1. Operational Excellence: How does the project support repeatable operations and troubleshooting?
 
 **Mitchell Brown Answer:**  
-The project uses AWS SAM and `template.yaml` so the stack can be validated, built, deployed, and deleted from the command line. CloudWatch logs, Step Functions execution history, and frontend log messages help troubleshoot problems during image upload, processing, and record loading.
+The project uses AWS SAM and 'template.yaml' so the stack can be validated, built, deployed, and deleted from the command line. CloudWatch logs, Step Functions execution history, and frontend log messages help troubleshoot problems dueing image upload, processing, and record loading.
 
 **Owen Ferko Answer:**  
-The Azure DevOps board, GitHub commits, Gherkin files, and README evidence create a repeatable record of how the system was built and tested. Completed tasks and linked commits make it easier to understand what changed and why.
+The Azure DevOps board, GitHub commits, Gherkin files, and readme are evidence to create repeatable record of how systems was built and tested. Completed tasks and linked commits make it easier to understand what changed and why.
 
 ### 2. Security: How does the project control access to AWS resources?
 
 **Mitchell Brown Answer:**  
-The app uses API Gateway as the public entry point instead of exposing backend resources directly. Lambda functions use the Learner Lab IAM role from `template.yaml`, and no AWS credentials are hard-coded in the source code.
+The app uses API Gateway as the public entry point instead of exposing backend resources directly. Lambda functions use the Learner Lab IAM role from 'template.yaml', and no AWS credentials are hard coded in the source code.
 
 **Owen Ferko Answer:**  
-The S3 buckets use Block Public Access and default encryption. The project also includes bucket policies requiring secure transport, and CloudWatch log retention limits how long logs are stored.
+The S3 bucket use Block Public Access and default encryption. The project also includes bucket policies secure transport, and CloudWatch log retention limits how long logs are stored.
 
 ### 3. Reliability: How does the system handle failures or recovery?
 
 **Mitchell Brown Answer:**  
-Step Functions separates the workflow into `L1Fetch`, `L2Call`, and `L3Save`, making failures easier to identify. Job status is stored in `JobsTable`, so the frontend can poll for `RUNNING`, `SUCCEEDED`, or `FAILED`.
+Step Functions separates the workflow into 'L1Fetch', 'L2Call', and 'L3Save', making failures easier to identify. Job status is stored in 'JobsTable', so the frontend can poll for 'RUNNING', 'SUCCEEDED', or 'FAILED'.
 
 **Owen Ferko Answer:**  
-The project can be recovered by redeploying the SAM template. A production version should add S3 versioning, DynamoDB point-in-time recovery, and scheduled backups to protect uploaded images and extracted records.
+The project can be recovered by redeploying the SAM template. A production version should add S3 versioning, DynamoDB point in time recovery, and scheduled backups to protect uploaded images and extracted records.
 
 ### 4. Performance Efficiency: Why is this architecture efficient for this workload?
 
 **Mitchell Brown Answer:**  
-The system uses serverless services that run only when needed. Lambda, API Gateway, S3, DynamoDB, Textract, and Step Functions are appropriate for a small image-processing workload because they avoid always-running servers.
+The system used serverless services that run only when needed. Lambda, API Gateway, S3, DynamoDB, Textract, and Step Functions are appropriate for a small image processing workload because they avoid always running servers.
 
 **Owen Ferko Answer:**  
-The frontend sends work to asynchronous backend processing instead of waiting for all processing in one request. Step Functions coordinates the work, and DynamoDB provides fast reads for job status and saved records.
+The frontend sends work to asynchronous backend processing instead of waiting for all processing in one request. Step Functions coordinates the work, and lastly DynamoDB provides fast reads for job status and saved records.
 
 ### 5. Cost Optimization: How does the project control cost?
 
 **Mitchell Brown Answer:**  
-The architecture is mostly pay-per-use, so the app does not require always-running EC2 instances or a continuously running database server. The AWS Pricing Calculator estimate was **\$5.93 per month** and **\$71.16 for 12 months**.
+The architecture is mostly par per use, so the app does not require always running EC2 instances or a continuously running database server. The AWS Pricing Calculator estimate was **/$5.93 per month** and **/71.16 for 12 months**.
 
 **Owen Ferko Answer:**  
-The project keeps costs low by using small estimated workloads, limited CloudWatch retention, DynamoDB storage, and serverless compute. The largest estimated cost is API Gateway, while the other services remain low for the prototype workload.
+The project manages the cost low by using small estimated workloads, limited CloudWatch retention, DynamoDB storage, and serverless compute. The largest estimated cost is API Gateway, while the other services remain low for the prototype workload.
     
 ________________________________________________________________________________________________
 
