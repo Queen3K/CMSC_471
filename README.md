@@ -292,7 +292,7 @@ The frontend sends work to asynchronous backend processing instead of waiting fo
 ### 5. Cost Optimization: How does the project control cost?
 
 **Mitchell Brown Answer:**  
-The architecture is mostly par per use, so the app does not require always running EC2 instances or a continuously running database server. The AWS Pricing Calculator estimate was **\$5.93 per month** and **\71.16 for 12 months**.
+The architecture is mostly par per use, so the app does not require always running EC2 instances or a continuously running database server. The AWS Pricing Calculator estimate was **\$5.93 per month** and **\$71.16 for 12 months**.
 
 **Owen Ferko Answer:**  
 The project manages the cost low by using small estimated workloads, limited CloudWatch retention, DynamoDB storage, and serverless compute. The largest estimated cost is API Gateway, while the other services remain low for the prototype workload.
